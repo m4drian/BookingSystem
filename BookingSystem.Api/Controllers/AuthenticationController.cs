@@ -1,6 +1,8 @@
-using BookingSystem.Application.Services.Authentication.Commands;
-using BookingSystem.Application.Services.Authentication.Queries;
+using BookingSystem.Application.Authentication.Commands.Register;
+using BookingSystem.Application.Authentication.Queries.Login;
+using BookingSystem.Application.Common;
 using BookingSystem.Contracts.Authentication;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingSystem.Api.Controllers;
@@ -9,27 +11,25 @@ namespace BookingSystem.Api.Controllers;
 [Route("auth")]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IAuthenticationCommandService _authenticationCommandService;
-
-    private readonly IAuthenticationQueryService _authenticationQueryService;
+    private readonly ISender _mediator;
 
     public AuthenticationController(
-        IAuthenticationCommandService authenticationCommandService,
-        IAuthenticationQueryService authenticationQueryService)
+        ISender mediator)
     {
-        _authenticationCommandService = authenticationCommandService;
-        _authenticationQueryService = authenticationQueryService;
+        _mediator = mediator;
     }
 
     [HttpPost("register")]
-    public IActionResult Register(RegisterRequest request)
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var authResult = _authenticationCommandService.Register(
-            request.FirstName,
+        var command = new RegisterCommand(
+            request.FirstName, 
             request.LastName,
             request.Email,
             request.Role,
             request.Password);
+
+        AuthenticationResult authResult = await _mediator.Send(command);
 
         var response = new AuthenticationResponse(
             authResult.user.Id,
@@ -44,11 +44,10 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login(LoginRequest request)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        var authResult = _authenticationQueryService.Login(
-            request.Email,
-            request.Password);
+        var query = new LoginQuery(request.Email, request.Password);
+        AuthenticationResult authResult = await _mediator.Send(query);
 
         var response = new AuthenticationResponse(
             authResult.user.Id,

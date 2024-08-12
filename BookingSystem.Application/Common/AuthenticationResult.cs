@@ -1,6 +1,6 @@
 using BookingSystem.Domain.Entities;
 
-namespace BookingSystem.Application.Services.Authentication.Common;
+namespace BookingSystem.Application.Common;
 
 public record AuthenticationResult(
     User user,

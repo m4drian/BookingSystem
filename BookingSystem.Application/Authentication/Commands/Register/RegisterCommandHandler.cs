@@ -1,27 +1,34 @@
 using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Common.Interfaces.Authentication;
 using BookingSystem.Application.Common.Interfaces.Persistance;
-using BookingSystem.Application.Services.Authentication.Common;
+using BookingSystem.Application.Common;
 using BookingSystem.Domain.Entities;
+using MediatR;
 
-namespace BookingSystem.Application.Services.Authentication.Commands;
+namespace BookingSystem.Application.Authentication.Commands.Register;
 
-public class AuthenticationCommandService : IAuthenticationCommandService
+public class RegisterCommandHandler
+    : IRequestHandler<RegisterCommand, AuthenticationResult>
 {
+
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     
     private readonly IUserRepository _userRepository;
 
-    public AuthenticationCommandService(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+    public RegisterCommandHandler(
+        IJwtTokenGenerator jwtTokenGenerator, 
+        IUserRepository userRepository)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
     }
 
-    public AuthenticationResult Register(string firstName, string lastName, string email, string role, string password)
+    public async Task<AuthenticationResult> Handle(
+        RegisterCommand command, 
+        CancellationToken cancellationToken)
     {
         // check if user exists
-        if(_userRepository.GetUserByEmail(email) != null)
+        if(_userRepository.GetUserByEmail(command.Email) != null)
         {
             throw new DuplicateEmailException();
         }
@@ -29,11 +36,11 @@ public class AuthenticationCommandService : IAuthenticationCommandService
         // create user generate ID and persist do DB
         var user = new User
         {
-            FirstName = firstName,
-            LastName = lastName,
-            Email = email,
-            Role = role,
-            Password = password
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            Email = command.Email,
+            Role = command.Role,
+            Password = command.Password
         };
 
         _userRepository.Add(user);
@@ -43,7 +50,7 @@ public class AuthenticationCommandService : IAuthenticationCommandService
         var token = _jwtTokenGenerator.GenerateToken(user);
 
         return new AuthenticationResult(
-            user, 
+            user,
             token);
     }
 }
