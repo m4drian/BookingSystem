@@ -1,3 +1,8 @@
+using System.Reflection;
+using BookingSystem.Application.Authentication.Commands.Register;
+using BookingSystem.Application.Common;
+using BookingSystem.Application.Common.Behaviors;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +18,10 @@ public static class DependencyInjection
             )
         );
 
+        services.AddScoped<
+            IPipelineBehavior<RegisterCommand, AuthenticationResult>, 
+            ValidateRegisterCommandBehavior>();
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         return services;
     }
 

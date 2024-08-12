@@ -24,3 +24,15 @@ Content-Type: application/json
     "password": "UnsafePassword1234@"
 }
 
+### invalid request
+
+POST {{host}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Jason3",
+    "lastName": "Medina3",
+    "email": "jmedina3@email.com",
+    "role": "kekew",
+    "password": "UnsafePassword1234@"
+}

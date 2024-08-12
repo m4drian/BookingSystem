@@ -27,6 +27,8 @@ public class RegisterCommandHandler
         RegisterCommand command, 
         CancellationToken cancellationToken)
     {
+        await Task.CompletedTask;
+        
         // check if user exists
         if(_userRepository.GetUserByEmail(command.Email) != null)
         {
