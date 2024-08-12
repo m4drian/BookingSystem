@@ -6,7 +6,5 @@ public interface IUserRepository{
 
     User? GetUserByEmail(string email);
 
-    string? GetUserRoleByEmail(string email);
-
     void Add(User user);
 }

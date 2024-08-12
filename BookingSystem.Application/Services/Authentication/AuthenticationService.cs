@@ -17,7 +17,7 @@ public class AuthenticationService : IAuthenticationService
         _userRepository = userRepository;
     }
 
-    public AuthenticationResult Register(string firstName, string lastName, string email, string password)
+    public AuthenticationResult Register(string firstName, string lastName, string email, string role, string password)
     {
         // check if user exists
         if(_userRepository.GetUserByEmail(email) != null)
@@ -31,6 +31,7 @@ public class AuthenticationService : IAuthenticationService
             FirstName = firstName,
             LastName = lastName,
             Email = email,
+            Role = role,
             Password = password
         };
 

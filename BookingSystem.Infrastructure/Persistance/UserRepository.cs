@@ -17,8 +17,4 @@ public class UserRepository : IUserRepository
         return _users.SingleOrDefault(u => u.Email == email);
     }
 
-    public string? GetUserRoleByEmail(string email)
-    {
-        throw new NotImplementedException();
-    }
 }

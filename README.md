@@ -66,13 +66,10 @@ location
 desk
 - id string
 - locationId string
+- userId string
 - available boolean
-- reservations
-{
-    employeeId string
-    startDate Date
-    endDate Date
-}
+- startDate Date
+- endDate Date
 
 user
 - id string

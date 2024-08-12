@@ -22,6 +22,7 @@ public class AuthenticationController : ControllerBase
             request.FirstName,
             request.LastName,
             request.Email,
+            request.Role,
             request.Password);
 
         var response = new AuthenticationResponse(
@@ -29,6 +30,7 @@ public class AuthenticationController : ControllerBase
             authResult.user.FirstName,
             authResult.user.LastName,
             authResult.user.Email,
+            authResult.user.Role,
             authResult.Token
         );
 
@@ -47,6 +49,7 @@ public class AuthenticationController : ControllerBase
             authResult.user.FirstName,
             authResult.user.LastName,
             authResult.user.Email,
+            authResult.user.Role,
             authResult.Token
         );
 
