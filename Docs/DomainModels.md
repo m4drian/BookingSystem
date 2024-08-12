@@ -3,6 +3,7 @@
 location
 - id string
 - name string
+- description string?
 - desks [string] //array of desk IDs
 
 desk
