@@ -17,10 +17,12 @@ msbuild.err
 msbuild.wrn
 
 # Visual Studio Code
-.vscode/
+#.vscode/
 
 # Rider
 .idea/
 
 # Visual Studio
 .vs/
+
+.fake
