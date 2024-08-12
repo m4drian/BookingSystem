@@ -1,3 +1,4 @@
+using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Common.Interfaces.Authentication;
 using BookingSystem.Application.Common.Interfaces.Persistance;
 using BookingSystem.Domain.Entities;
@@ -21,7 +22,7 @@ public class AuthenticationService : IAuthenticationService
         // check if user exists
         if(_userRepository.GetUserByEmail(email) != null)
         {
-            throw new Exception("User with given email already exists.");
+            throw new DuplicateEmailException();
         }
 
         // create user generate ID and persist do DB

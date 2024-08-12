@@ -23,12 +23,16 @@ POST /api/locations/{locationId}/desks
 Get Desks in Location:
 GET /api/locations/{locationId}/desks
 
-Update Desk Availability:
-PUT /api/desks/{deskId}/availability
-Request body: { available: boolean }
-
 Delete Desk:
 DELETE /api/desks/{deskId}
+
+
+## Reservations
+Create Reservation:
+POST /api/reservations/{reservationId}
+
+Delete Reservation:
+DELETE /api/reservations/{reservationId}
 
 ## Desk Reservations
 
@@ -83,6 +87,7 @@ user
 Administration:
 - Manage locations (add/remove, can't remove if desk exists in location)
 - Manage desk in locations (add/remove if no reservation/make unavailable)
+
 Employees
 - Determine which desks are available to book or unavailable.
 - Filter desks based on location
