@@ -1,4 +1,5 @@
-using BookingSystem.Application.Services.Authentication;
+using BookingSystem.Application.Services.Authentication.Commands;
+using BookingSystem.Application.Services.Authentication.Queries;
 using BookingSystem.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,22 @@ namespace BookingSystem.Api.Controllers;
 [Route("auth")]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IAuthenticationService _authenticationService;
+    private readonly IAuthenticationCommandService _authenticationCommandService;
 
-    public AuthenticationController(IAuthenticationService authenticationService)
+    private readonly IAuthenticationQueryService _authenticationQueryService;
+
+    public AuthenticationController(
+        IAuthenticationCommandService authenticationCommandService,
+        IAuthenticationQueryService authenticationQueryService)
     {
-        _authenticationService = authenticationService;
+        _authenticationCommandService = authenticationCommandService;
+        _authenticationQueryService = authenticationQueryService;
     }
 
     [HttpPost("register")]
     public IActionResult Register(RegisterRequest request)
     {
-        var authResult = _authenticationService.Register(
+        var authResult = _authenticationCommandService.Register(
             request.FirstName,
             request.LastName,
             request.Email,
@@ -40,7 +46,7 @@ public class AuthenticationController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login(LoginRequest request)
     {
-        var authResult = _authenticationService.Login(
+        var authResult = _authenticationQueryService.Login(
             request.Email,
             request.Password);
 

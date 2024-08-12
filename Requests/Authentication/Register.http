@@ -7,8 +7,20 @@ Content-Type: application/json
     "firstName": "Jason",
     "lastName": "Medina",
     "email": "jmedina@email.com",
+    "role": "admin",
     "password": "UnsafePassword1234@"
 }
 
 ###
+
+POST {{host}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Jason2",
+    "lastName": "Medina2",
+    "email": "jmedina2@email.com",
+    "role": "employee",
+    "password": "UnsafePassword1234@"
+}
 
