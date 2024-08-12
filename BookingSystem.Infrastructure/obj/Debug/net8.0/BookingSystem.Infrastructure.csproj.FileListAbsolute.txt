@@ -1,0 +1,17 @@
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\bin\Debug\net8.0\BookingSystem.Infrastructure.deps.json
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\bin\Debug\net8.0\BookingSystem.Infrastructure.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\bin\Debug\net8.0\BookingSystem.Infrastructure.pdb
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\BookingSystem.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\BookingSystem.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\BookingSystem.Infrastructure.AssemblyInfo.cs
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\BookingSystem.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\BookingSystem.Infrastructure.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\refint\BookingSystem.Infrastructure.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\BookingSystem.Infrastructure.pdb
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\ref\BookingSystem.Infrastructure.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\bin\Debug\net8.0\BookingSystem.Application.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\bin\Debug\net8.0\BookingSystem.Domain.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\bin\Debug\net8.0\BookingSystem.Application.pdb
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\bin\Debug\net8.0\BookingSystem.Domain.pdb
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\BookingSystem.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Infrastructure\obj\Debug\net8.0\BookingS.84CF42C0.Up2Date

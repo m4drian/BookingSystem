@@ -1,0 +1,11 @@
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\bin\Debug\net8.0\BookingSystem.Contracts.deps.json
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\bin\Debug\net8.0\BookingSystem.Contracts.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\bin\Debug\net8.0\BookingSystem.Contracts.pdb
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\obj\Debug\net8.0\BookingSystem.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\obj\Debug\net8.0\BookingSystem.Contracts.AssemblyInfoInputs.cache
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\obj\Debug\net8.0\BookingSystem.Contracts.AssemblyInfo.cs
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\obj\Debug\net8.0\BookingSystem.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\obj\Debug\net8.0\BookingSystem.Contracts.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\obj\Debug\net8.0\refint\BookingSystem.Contracts.dll
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\obj\Debug\net8.0\BookingSystem.Contracts.pdb
+C:\Users\mepper\Documents\Code\BookingSystem\BookingSystem.Contracts\obj\Debug\net8.0\ref\BookingSystem.Contracts.dll
