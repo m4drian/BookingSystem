@@ -1,6 +1,5 @@
 namespace BookingSystem.Contracts.Locations;
 
-public record GetDesksFromLocationRequest
-(
+public record GetDesksFromLocationRequest(
     string Name
 );

@@ -1,6 +1,5 @@
 namespace BookingSystem.Contracts.Desks;
 
-public record GetDeskReservationRequest
-(
+public record GetDeskReservationRequest(
     int Id
 );

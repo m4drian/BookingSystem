@@ -16,5 +16,4 @@ public class DeskRepository : IDeskRepository
     {
         return null;
     }
-
 }

@@ -8,7 +8,6 @@ namespace BookingSystem.Api.Controllers;
 [AllowAnonymous]
 public class ErrorsController : ControllerBase
 {
-
     [Route("/error")]
     public IActionResult Error()
     {

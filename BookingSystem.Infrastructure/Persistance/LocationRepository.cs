@@ -16,5 +16,4 @@ public class LocationRepository : ILocationRepository
     {
         return null;
     }
-
 }

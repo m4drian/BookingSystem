@@ -10,7 +10,6 @@ namespace BookingSystem.Application.Authentication.Commands.Register;
 public class RegisterCommandHandler
     : IRequestHandler<RegisterCommand, AuthenticationResult>
 {
-
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     
     private readonly IUserRepository _userRepository;
@@ -35,7 +34,7 @@ public class RegisterCommandHandler
             throw new DuplicateEmailException();
         }
 
-        // create user generate ID and persist do DB
+        // create user, generate ID and persist to DB
         var user = new User
         {
             FirstName = command.FirstName,
@@ -48,7 +47,7 @@ public class RegisterCommandHandler
         _userRepository.Add(user);
 
         // create token
-        //Guid userId = Guid.NewGuid();
+        // Guid userId = Guid.NewGuid();
         var token = _jwtTokenGenerator.GenerateToken(user);
 
         return new AuthenticationResult(

@@ -4,7 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace BookingSystem.Domain.Entities;
 
-public class Desk{
+public class Desk
+{
     [Key]
     [Required]
     public Guid Id { get; set; } = Guid.NewGuid();

@@ -1,6 +1,5 @@
 namespace BookingSystem.Contracts.Desks;
 
-public record DeleteDeskRequest
-(
+public record DeleteDeskRequest(
     int Id
 );

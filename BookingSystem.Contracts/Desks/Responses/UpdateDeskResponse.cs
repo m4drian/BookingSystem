@@ -1,8 +1,5 @@
 namespace BookingSystem.Contracts.Desks.Responses;
 
-public record UpdateDeskResponse
-(
-
+public record UpdateDeskResponse(
     string? Message
-
 );

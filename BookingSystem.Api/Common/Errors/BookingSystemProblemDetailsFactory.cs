@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace BookingSystem.Api.Common.Errors;
 
+// This class can be used to customize what is displayed in problem details if such necessity arises
 public class BookingSystemProblemDetailsFactory : ProblemDetailsFactory
 {
     private readonly ApiBehaviorOptions _options;

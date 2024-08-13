@@ -5,8 +5,8 @@ using MediatR;
 
 namespace BookingSystem.Application.Common.Behaviors;
 
-public class ValidateRegisterCommandBehavior :
-    IPipelineBehavior<RegisterCommand, AuthenticationResult>
+public class ValidateRegisterCommandBehavior 
+    : IPipelineBehavior<RegisterCommand, AuthenticationResult>
 {
     private readonly IValidator<RegisterCommand> _validator;
 
@@ -20,7 +20,7 @@ public class ValidateRegisterCommandBehavior :
         RequestHandlerDelegate<AuthenticationResult> next, 
         CancellationToken cancellationToken)
     {
-        //before the handler
+        // before the handler
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if( !validationResult.IsValid )

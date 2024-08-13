@@ -1,6 +1,5 @@
 namespace BookingSystem.Contracts.Locations;
 
-public record DeleteLocationRequest
-(
+public record DeleteLocationRequest(
     string Name
 );

@@ -3,7 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace BookingSystem.Domain.Entities;
 
-public class Location{
+public class Location
+{
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
 
