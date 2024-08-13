@@ -13,35 +13,36 @@ POST /api/auth/login
 - Create Location (admin only):
 POST /api/locations
 
-- Get All Locations:
-GET /api/locations
-
 - Update Location (admin only):
 PUT /api/locations/{locationName}
 
-- Delete Location:
-DELETE /api/locations/{locationName}
+- Get All Locations:
+GET /api/locations/all
 
 - Get Desks in Location (admins can see who reserved them, employees can only see if they are aviable):
-GET /api/locations/{locationName}/desks
+GET /api/locations/desks/{locationName}
+
+- Delete Location:
+DELETE /api/locations/{locationName}
 
 ## Desk Management
 
 - Create Desk (admin only):
 POST /api/desks/{locationName}
 
-- Delete Desk (admin only):
-DELETE /api/desks/{deskId}
-
 - Update Desk Reservation
 (admins can remove reservation and change desk details except date, employees can reserve desk or cancel their own reservation):
-POST /api/desks/reservation
+PUT /api/desks/reservation/{deskId}
+PUT /api/desks/reservation/admin/{deskId}
+
+Check all desks (admin only):
+GET /api/desks/all
 
 Check if desk is reserved:
 GET /api/desks/{deskId}
 
-Check all desks (admin only):
-GET /api/desks
+- Delete Desk (admin only):
+DELETE /api/desks/{deskId}
 
 
 # Information about models
