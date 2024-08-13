@@ -9,6 +9,7 @@ public interface IDeskRepository
     // to check if exists
     Desk? GetDeskById(Guid deskId);
     void UpdateDeskAdmin(Desk desk);
+    void UpdateAllDeskLocations(Location location);
     void ReserveDeskEmployee(Desk desk);
     void DeleteDesk(Guid deskId);
 }

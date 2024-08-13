@@ -30,8 +30,8 @@ POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
-    "firstName": "Jason3",
-    "lastName": "Medina3",
+    "firstName": "",
+    "lastName": "",
     "email": "jmedina3@email.com",
     "role": "kekew",
     "password": "UnsafePassword1234@"

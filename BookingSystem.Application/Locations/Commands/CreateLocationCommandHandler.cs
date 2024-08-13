@@ -29,7 +29,7 @@ public class CreateLocationCommandHandler
         // check if location exists
         if(_locationRepository.GetLocationByName(request.Name) != null)
         {
-            throw new DuplicateLocationException();
+            throw new NoLocationException();
         }
 
         // create location, generate ID and persist to DB

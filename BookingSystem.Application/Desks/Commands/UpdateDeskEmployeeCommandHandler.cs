@@ -3,6 +3,8 @@ using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 using MediatR;
 using BookingSystem.Application.Desks.Common;
 using BookingSystem.Application.Authentication.Common.Interfaces.Services;
+using System.ComponentModel.DataAnnotations;
+using BookingSystem.Application.Common.Helpers;
 
 namespace BookingSystem.Application.Desks.Commands;
 
@@ -23,19 +25,21 @@ public class UpdateDeskEmployeeCommandHandler
     public async Task<DeskResult> Handle(UpdateDeskEmployeeCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
+
+        UpdateDeskValidation(request);
         
         var desk = _deskRepository.GetDeskById(new Guid(request.DeskId));
 
         // check if desk exists
         if(desk == null)
         {
-            throw new DuplicateLocationException();
+            throw new NoDeskException();
         }
 
         // employee cannot cancel booking less than 24h before reservation
         if (request.Available == true && desk.ReservationStartDate > _clock.UtcNow.AddDays(1))
         {
-            throw new DuplicateLocationException();
+            throw new CancellationTooEarlyException();
         }
 
         desk.UserEmail = request.Available == false ? request.UserEmail : null;
@@ -45,7 +49,7 @@ public class UpdateDeskEmployeeCommandHandler
         // cannot book desk for more than a week
         if (request.EndDate > request.StartDate.AddDays(6))
         {
-            throw new DuplicateLocationException();
+            throw new BookingTooLongException();
         }
 
         if (request.Available)
@@ -63,5 +67,29 @@ public class UpdateDeskEmployeeCommandHandler
 
         return new DeskResult(
             desk);
+    }
+
+    private void UpdateDeskValidation(UpdateDeskEmployeeCommand request)
+    {
+
+        if (string.IsNullOrEmpty(request.DeskId))
+        {
+            throw new ValidationException("Desk Id is required");
+        }
+
+        if (string.IsNullOrEmpty(request.UserEmail) || !ValidateHelper.IsValidEmail(request.UserEmail))
+        {
+            throw new ValidationException("Bad email format");
+        }
+    
+        if (request.StartDate < _clock.UtcNow)
+        {
+            throw new ValidationException("Start date must be in the future");
+        }
+
+        if (request.EndDate.HasValue && request.EndDate < request.StartDate)
+        {
+            throw new ValidationException("End date must be greater than or equal to start date");
+        }
     }
 }

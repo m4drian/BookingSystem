@@ -44,6 +44,11 @@ public class DeskRepository : IDeskRepository
         }
     }
 
+    public void UpdateAllDeskLocations(Location location)
+    {
+        _desks.ForEach(desk => {desk.Location = location; desk.LocationId = location.Id; });
+    }
+
     public void UpdateDeskAdmin(Desk desk)
     {
         var existingDesk = _desks.FirstOrDefault(d => d.Id == desk.Id);

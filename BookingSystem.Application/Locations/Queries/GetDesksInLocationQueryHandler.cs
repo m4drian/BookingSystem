@@ -6,6 +6,7 @@ using BookingSystem.Domain.Entities;
 using MediatR;
 using BookingSystem.Application.Locations.Queries;
 using BookingSystem.Application.Desks.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookingSystem.Application.Authentication.Queries.Login;
 
@@ -25,10 +26,12 @@ public class GetDesksInLocationQueryHandler
     {
         await Task.CompletedTask;
 
+        GetDesksInLocationValidation(request);
+
         // check if location exists
         if(_locationRepository.GetLocationByName(request.Name) == null)
         {
-            throw new DuplicateLocationException();
+            throw new NoLocationException();
         }
 
         // Get user role from claims (assuming the role claim is named "role")
@@ -38,5 +41,18 @@ public class GetDesksInLocationQueryHandler
 
         return new DesksResult(
             desks);
+    }
+
+    private void GetDesksInLocationValidation(GetDesksInLocationQuery request)
+    {
+        if (string.IsNullOrEmpty(request.Name))
+        {
+            throw new ValidationException("Location name is required");
+        }
+
+        if (string.IsNullOrEmpty(request.Role))
+        {
+            throw new ValidationException("User role is required");
+        }
     }
 }

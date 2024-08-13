@@ -80,7 +80,7 @@ public class DesksController : ControllerBase
     }
 
     [HttpGet("{deskId}")]
-    public async Task<IActionResult> GetDeskReservation(
+    public async Task<IActionResult> GetDeskReservationStatus(
         GetDeskReservationRequest request, 
         string deskId)
     {
@@ -99,7 +99,7 @@ public class DesksController : ControllerBase
     }
 
     [HttpPut("reservation/{deskId}")]
-    public async Task<IActionResult> UpdateDeskEmployee(
+    public async Task<IActionResult> UpdateDeskAsEmployee(
         UpdateDeskEmployeeRequest request, 
         string deskId)
     {
@@ -124,7 +124,7 @@ public class DesksController : ControllerBase
     }
 
     [HttpPut("reservation/admin/{deskId}")]
-    public async Task<IActionResult> UpdateDeskAdmin(
+    public async Task<IActionResult> UpdateDeskAsAdmin(
         UpdateDeskAdminRequest request, 
         string deskId)
     {

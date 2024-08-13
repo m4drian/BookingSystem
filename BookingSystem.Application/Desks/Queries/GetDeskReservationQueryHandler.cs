@@ -3,6 +3,7 @@ using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 using MediatR;
 using BookingSystem.Application.Desks.Commands;
 using BookingSystem.Application.Desks.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookingSystem.Application.Desks.Queries;
 
@@ -20,16 +21,27 @@ public class GetDeskReservationQueryHandler
     public async Task<ReservationResult> Handle(GetDeskReservationQuery request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
+
+        GetDeskReservationValidation(request);
         
         var desk = _deskRepository.GetDeskById(new Guid(request.DeskId));
 
         // check if desk exists
         if(desk == null)
         {
-            throw new DuplicateLocationException();
+            throw new NoDeskException();
         }
 
         return new ReservationResult(
             desk.Available);
+    }
+
+    private void GetDeskReservationValidation(GetDeskReservationQuery request)
+    {
+
+        if (string.IsNullOrEmpty(request.DeskId))
+        {
+            throw new ValidationException("Desk Id is required");
+        }
     }
 }

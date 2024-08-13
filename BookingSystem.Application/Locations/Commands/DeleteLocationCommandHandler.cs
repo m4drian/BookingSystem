@@ -5,6 +5,7 @@ using BookingSystem.Application.Authentication.Common;
 using BookingSystem.Domain.Entities;
 using MediatR;
 using BookingSystem.Application.Locations.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookingSystem.Application.Locations.Commands;
 
@@ -23,19 +24,21 @@ public class DeleteLocationCommandHandler
     public async Task<LocationResult> Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
+
+        DeleteLocationValidation(request);
         
         var location = _locationRepository.GetLocationByName(request.Name);
 
         // check if location exists
         if(location == null)
         {
-            throw new DuplicateLocationException();
+            throw new NoLocationException();
         }
 
         // check if location has desks
         if(!location?.Desks?.Any() ?? false)
         {
-            throw new DuplicateLocationException();
+            throw new DesksInLocationException();
         }
 
         var locationToDelete = new Location
@@ -48,5 +51,13 @@ public class DeleteLocationCommandHandler
 
         return new LocationResult(
             locationToDelete);
+    }
+
+    private void DeleteLocationValidation(DeleteLocationCommand request)
+    {
+        if (string.IsNullOrEmpty(request.Name))
+        {
+            throw new ValidationException("Location name is required");
+        }
     }
 }

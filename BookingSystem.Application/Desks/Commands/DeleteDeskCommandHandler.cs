@@ -5,6 +5,7 @@ using MediatR;
 using BookingSystem.Application.Locations.Common;
 using BookingSystem.Application.Desks.Commands;
 using BookingSystem.Application.Desks.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookingSystem.Application.Desks.Commands;
 
@@ -22,24 +23,34 @@ public class DeleteDeskCommandHandler
     public async Task<DeskResult> Handle(DeleteDeskCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
+
+        DeleteDeskValidation(request);
         
         var desk = _deskRepository.GetDeskById(new Guid(request.DeskId));
 
         // check if desk exists
         if(desk == null)
         {
-            throw new DuplicateLocationException();
+            throw new NoDeskException();
         }
 
         // cannot remove if there is a reservation
         if(desk.Available == false)
         {
-            throw new DuplicateLocationException();
+            throw new DeskOccupiedException();
         }
 
         _deskRepository.DeleteDesk(new Guid(request.DeskId));
 
         return new DeskResult(
             desk);
+    }
+
+    private void DeleteDeskValidation(DeleteDeskCommand request)
+    {
+        if (string.IsNullOrEmpty(request.DeskId))
+        {
+            throw new ValidationException("DeskId is required");
+        }
     }
 }
