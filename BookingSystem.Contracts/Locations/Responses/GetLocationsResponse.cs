@@ -2,6 +2,6 @@ using BookingSystem.Contracts.Common.DTO;
 
 namespace BookingSystem.Contracts.Locations.Responses;
 
-public record LocationsResponse(
-    List<LocationDto> Locations
+public record GetLocationsResponse(
+    List<LocationDto>? Locations
 );

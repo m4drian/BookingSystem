@@ -3,7 +3,7 @@
 @tokenEmployee=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYTk2NmEwNy1kMWU4LTQ4MzItYjc4OC0zZDBmODNjYTA1NWMiLCJnaXZlbl9uYW1lIjoiSmFzb24yIiwiZmFtaWx5X25hbWUiOiJNZWRpbmEyIiwianRpIjoiNjIwNDk1NWMtMmNmMi00ZjIzLTlhOGUtZmRiNmJmMDU4MTYzIiwiUm9sZSI6ImVtcGxveWVlIiwiZXhwIjoxNzIzNTc1Mzc2LCJpc3MiOiJtNGRyaWFuIiwiYXVkIjoibTRkcmlhbiJ9._D76XWGnC6LSDROmcD_FB9SQv-nBCKC3qXE0WCWF1jo
 
 POST {{host}}/api/locations
-Authorization: Bearer {{tokenEmployee}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -42,4 +42,13 @@ Content-Type: application/json
 {
     "ChangedName": "Office12",
     "description": "Office with multiple AC units"
+}
+
+###
+GET {{host}}/api/locations/all
+Authorization: Bearer {{tokenEmployee}}
+Content-Type: application/json
+
+{
+
 }

@@ -4,5 +4,6 @@ using MediatR;
 namespace BookingSystem.Application.Locations.Queries;
 
 public record GetDesksInLocationQuery(
-    string Name
+    string Name,
+    string Role
 ) : IRequest<DesksResult>;
