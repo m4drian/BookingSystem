@@ -1,3 +1,4 @@
+using BookingSystem.Contracts.Locations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,31 +18,38 @@ public class LocationsController : ControllerBase
     }
     
     [HttpPost]
-    public IActionResult CreateLocation()
+    public IActionResult CreateLocation(CreateLocationRequest request)
     {
-        return Ok(Array.Empty<string>());
+        return Ok(request);
     }
 
     [HttpPut("{locationName}")]
-    public IActionResult UpdateLocation()
+    public IActionResult UpdateLocation(
+        UpdateLocationRequest request, 
+        string locationName)
     {
-        return Ok(Array.Empty<string>());
+        return Ok(request);
     }
 
     [HttpGet("all")]
-    public IActionResult GetLocations()
+    public IActionResult GetLocations(
+        GetLocationsRequest request)
     {
         return Ok(Array.Empty<string>());
     }
 
     [HttpGet("desks/{locationName}")]
-    public IActionResult GetDesksFromLocation()
+    public IActionResult GetDesksFromLocation(
+        GetDesksFromLocationRequest request, 
+        string locationName)
     {
         return Ok(Array.Empty<string>());
     }
 
     [HttpDelete("{locationName}")]
-    public IActionResult DeleteLocation()
+    public IActionResult DeleteLocation(
+        DeleteLocationRequest request, 
+        string locationName)
     {
         return Ok(Array.Empty<string>());
     }

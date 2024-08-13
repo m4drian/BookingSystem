@@ -1,6 +1,6 @@
 using BookingSystem.Application.Authentication.Commands.Register;
 using BookingSystem.Application.Authentication.Queries.Login;
-using BookingSystem.Application.Common;
+using BookingSystem.Application.Authentication.Common;
 using BookingSystem.Contracts.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

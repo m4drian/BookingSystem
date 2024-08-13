@@ -1,9 +1,9 @@
 using BookingSystem.Application.Authentication.Commands.Register;
-using BookingSystem.Application.Common.Errors;
+using BookingSystem.Application.Authentication.Common.Errors;
 using FluentValidation;
 using MediatR;
 
-namespace BookingSystem.Application.Common.Behaviors;
+namespace BookingSystem.Application.Authentication.Common.Behaviors;
 
 public class ValidateRegisterCommandBehavior 
     : IPipelineBehavior<RegisterCommand, AuthenticationResult>

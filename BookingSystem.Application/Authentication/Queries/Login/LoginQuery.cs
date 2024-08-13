@@ -1,4 +1,4 @@
-using BookingSystem.Application.Common;
+using BookingSystem.Application.Authentication.Common;
 using MediatR;
 
 namespace BookingSystem.Application.Authentication.Queries.Login;

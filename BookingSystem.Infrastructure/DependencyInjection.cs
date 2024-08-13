@@ -1,7 +1,7 @@
 using System.Text;
-using BookingSystem.Application.Common.Interfaces.Authentication;
-using BookingSystem.Application.Common.Interfaces.Persistance;
-using BookingSystem.Application.Common.Interfaces.Services;
+using BookingSystem.Application.Authentication.Common.Interfaces.Authentication;
+using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
+using BookingSystem.Application.Authentication.Common.Interfaces.Services;
 using BookingSystem.Infrastructure.Authentication;
 using BookingSystem.Infrastructure.Persistance;
 using BookingSystem.Infrastructure.Services;

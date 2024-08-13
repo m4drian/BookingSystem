@@ -1,6 +1,6 @@
 using BookingSystem.Domain.Entities;
 
-namespace BookingSystem.Application.Common.Interfaces.Persistance;
+namespace BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 
 public interface ILocationRepository
 {

@@ -1,4 +1,4 @@
-using BookingSystem.Application.Common.Interfaces.Persistance;
+using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 using BookingSystem.Domain.Entities;
 
 namespace BookingSystem.Infrastructure.Persistance;

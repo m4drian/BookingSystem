@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace BookingSystem.Application.Common.Errors;
+namespace BookingSystem.Application.Authentication.Common.Errors;
 
 public class RegisterValidationException : Exception, IServiceException
 {

@@ -1,3 +1,4 @@
+using BookingSystem.Contracts.Desks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,37 +18,47 @@ public class DesksController : ControllerBase
     }
 
     [HttpPost("{locationName}")]
-    public IActionResult CreateDesk()
+    public IActionResult CreateDesk(
+        CreateDeskRequest request, 
+        string locationName)
     {
         return Ok(Array.Empty<string>());
     }
 
     [HttpPut("reservation/{deskId}")]
-    public IActionResult UpdateDeskEmployee()
+    public IActionResult UpdateDeskEmployee(
+        UpdateDeskEmployeeRequest request, 
+        string deskId)
     {
         return Ok(Array.Empty<string>());
     }
 
     [HttpPut("reservation/admin/{deskId}")]
-    public IActionResult UpdateDeskAdmin()
+    public IActionResult UpdateDeskAdmin(
+        UpdateDeskAdminRequest request, 
+        string deskId)
     {
         return Ok(Array.Empty<string>());
     }
 
     [HttpGet("all")]
-    public IActionResult GetDesks()
+    public IActionResult GetDesks(GetDesksRequest request)
     {
         return Ok(Array.Empty<string>());
     }
 
     [HttpGet("{deskId}")]
-    public IActionResult GetDeskReservation()
+    public IActionResult GetDeskReservation(
+        GetDeskReservationRequest request, 
+        string deskId)
     {
         return Ok(Array.Empty<string>());
     }
 
     [HttpDelete("{deskId}")]
-    public IActionResult DeleteDesk()
+    public IActionResult DeleteDesk(
+        DeleteDeskRequest request, 
+        string deskId)
     {
         return Ok(Array.Empty<string>());
     }

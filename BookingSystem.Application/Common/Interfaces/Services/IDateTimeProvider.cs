@@ -1,4 +1,4 @@
-namespace BookingSystem.Application.Common.Interfaces.Services;
+namespace BookingSystem.Application.Authentication.Common.Interfaces.Services;
 
 public interface IDateTimeProvider
 {

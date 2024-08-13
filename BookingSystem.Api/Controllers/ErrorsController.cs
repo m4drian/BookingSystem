@@ -1,4 +1,4 @@
-using BookingSystem.Application.Common.Errors;
+using BookingSystem.Application.Authentication.Common.Errors;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;

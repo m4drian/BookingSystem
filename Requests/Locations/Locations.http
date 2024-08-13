@@ -1,4 +1,44 @@
 @host=http://localhost:5275
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYzg0MTJlNi1mM2Q3LTRjMDYtYTdiNi1lODQ3MmU5OTMxNzAiLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6IjBlZTYxMzhlLTBkMjMtNGE3Ny1iYzI2LTdjZmY4NjNmZTA5YiIsImV4cCI6MTcyMzU2MjE5OSwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.HK6_XNLyqIBn_Kz_2SEPX9dwOForLfwyLuk-nyCSgIA
 
-GET {{host}}/api/locations
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNGVlNTM0OS1lMWExLTQ3OGUtYTE3MS01MjAzYzZjZDQxODAiLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6IjhjZWYwMGNiLTQ3YjAtNDgyNS05OTFhLWJiYTg0NDAxN2FiOSIsImV4cCI6MTcyMzUxMTcxMiwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.be-7lKW5YMF4iw71NciW_xRx5EUyLNA3hEMaLzCzzfo
+POST {{host}}/api/locations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Office1",
+    "description": "Office with multiple heaters"
+}
+
+###
+
+POST {{host}}/api/locations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Office2",
+    "description": ""
+}
+
+###
+
+POST {{host}}/api/locations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "",
+    "description": ""
+}
+
+###
+
+PUT {{host}}/api/locations/Office1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "ChangedName": "Office12",
+    "description": "Office with multiple AC units"
+}
