@@ -3,12 +3,14 @@ using BookingSystem.Application.Authentication.Queries.Login;
 using BookingSystem.Application.Common;
 using BookingSystem.Contracts.Authentication;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingSystem.Api.Controllers;
 
 [ApiController]
 [Route("auth")]
+[AllowAnonymous]
 public class AuthenticationController : ControllerBase
 {
     private readonly ISender _mediator;

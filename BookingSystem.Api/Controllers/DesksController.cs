@@ -6,10 +6,10 @@ namespace BookingSystem.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class LocationsController : ControllerBase
+public class DesksController : ControllerBase
 {
     [HttpGet("list")]
-    public IActionResult ListLocations()
+    public IActionResult ListDesks()
     {
         return Ok(Array.Empty<string>());
     }

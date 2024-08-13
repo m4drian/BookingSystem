@@ -1,9 +1,11 @@
 using BookingSystem.Application.Common.Errors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingSystem.Api.Controllers;
 
+[AllowAnonymous]
 public class ErrorsController : ControllerBase
 {
 
