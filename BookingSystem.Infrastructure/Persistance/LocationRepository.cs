@@ -10,31 +10,40 @@ public class LocationRepository : ILocationRepository
     public void Add(Location location)
     {
         _locations.Add(location);
-        throw new NotImplementedException();
     }
 
     public void Delete(Location location)
     {
-        throw new NotImplementedException();
+        var locationToRemove = _locations.FirstOrDefault(l => l.Name == location.Name);
+        if (locationToRemove != null)
+        {
+            _locations.Remove(locationToRemove);
+        }
     }
 
     public List<Location>? GetAllLocations()
     {
-        throw new NotImplementedException();
+        return _locations.ToList();
     }
 
     public List<Desk>? GetDesksInLocation(string locationName)
     {
-        throw new NotImplementedException();
+        var location = _locations.FirstOrDefault(l => l.Name == locationName);
+        return location?.Desks.ToList() ?? new List<Desk>();
     }
 
     public Location? GetLocationByName(string locationName)
     {
-        throw new NotImplementedException();
+        return _locations.FirstOrDefault(l => l.Name == locationName);
     }
 
     public void Update(Location location)
     {
-        throw new NotImplementedException();
+        var existingLocation = _locations.FirstOrDefault(l => l.Id == location.Id);
+        if (existingLocation != null)
+        {
+            existingLocation.Name = location.Name;
+            existingLocation.Description = location.Description;
+        }
     }
 }

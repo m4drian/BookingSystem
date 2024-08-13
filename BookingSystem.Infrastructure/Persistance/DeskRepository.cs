@@ -9,32 +9,50 @@ public class DeskRepository : IDeskRepository
 
     public void Add(Desk desk, Guid locationId)
     {
+        desk.LocationId = locationId;
         _desks.Add(desk);
-        throw new NotImplementedException();
     }
 
     public void DeleteDesk(Guid deskId)
     {
-        throw new NotImplementedException();
+        var deskToRemove = _desks.FirstOrDefault(d => d.Id == deskId);
+        if (deskToRemove != null)
+        {
+            _desks.Remove(deskToRemove);
+        }
     }
 
     public List<Desk>? GetAllDesks()
     {
-        throw new NotImplementedException();
+        return _desks.ToList();
     }
 
     public Desk? GetDeskById(Guid deskId)
     {
-        throw new NotImplementedException();
+        return _desks.FirstOrDefault(d => d.Id == deskId);
     }
 
     public void ReserveDeskEmployee(Desk desk)
     {
-        throw new NotImplementedException();
+        var existingDesk = _desks.FirstOrDefault(d => d.Id == desk.Id);
+        if (existingDesk != null)
+        {
+            existingDesk.UserEmail = desk.UserEmail;
+            existingDesk.ReservationStartDate = desk.ReservationStartDate;
+            existingDesk.ReservationEndDate = desk.ReservationEndDate;
+            existingDesk.Available = desk.Available;
+        }
     }
 
     public void UpdateDeskAdmin(Desk desk)
     {
-        throw new NotImplementedException();
+        var existingDesk = _desks.FirstOrDefault(d => d.Id == desk.Id);
+        if (existingDesk != null)
+        {
+            existingDesk.UserEmail = desk.UserEmail;
+            existingDesk.Available = desk.Available;
+            existingDesk.ReservationStartDate = desk.ReservationStartDate;
+            existingDesk.ReservationEndDate = desk.ReservationEndDate;
+        }
     }
 }
