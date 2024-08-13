@@ -1,15 +1,15 @@
 namespace BookingSystem.Contracts.Desks;
 
 public record CreateDeskRequest
-{
-    string LocationName;
-    
-    string? UserEmail;
+(
+    string LocationName,
 
-    bool Available;
+    string? UserEmail,
 
-    DateTime? StartDate;
+    bool Available,
 
-    DateTime? EndDate;
+    DateTime? StartDate,
 
-}
+    DateTime? EndDate
+
+);

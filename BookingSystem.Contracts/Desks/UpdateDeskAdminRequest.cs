@@ -1,15 +1,15 @@
 namespace BookingSystem.Contracts.Desks;
 
 public record UpdateDeskAdminRequest
-{
-    int DeskId;
+(
+    int DeskId,
     
-    string? UserEmail;
+    string? UserEmail,
 
-    bool? Available;
+    bool? Available,
 
-    DateTime? StartDate;
+    DateTime? StartDate,
 
-    DateTime? EndDate;
+    DateTime? EndDate
 
-}
+);

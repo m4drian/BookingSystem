@@ -1,6 +1,7 @@
 namespace BookingSystem.Contracts.Desks.Responses;
 
-public record DeleteDeskResponse(
+public record DeleteDeskResponse
+(
 
     string? Message
 

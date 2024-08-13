@@ -1,13 +1,13 @@
 namespace BookingSystem.Contracts.Desks;
 
 public record UpdateDeskEmployeeRequest
-{
-    int DeskId;
+(
+    int DeskId,
     
-    string UserEmail;
+    string UserEmail,
 
-    DateTime StartDate;
+    DateTime StartDate,
 
-    DateTime? EndDate;
+    DateTime? EndDate
 
-}
+);

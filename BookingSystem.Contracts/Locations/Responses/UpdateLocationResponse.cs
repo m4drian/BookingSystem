@@ -1,6 +1,7 @@
 namespace BookingSystem.Contracts.Locations.Responses;
 
-public record UpdateLocationResponse(
+public record UpdateLocationResponse
+(
 
     string? Message
 

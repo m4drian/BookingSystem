@@ -1,6 +1,7 @@
 namespace BookingSystem.Contracts.Authentication;
 
-public record RegisterRequest(
+public record RegisterRequest
+(
     string FirstName,
     string LastName,
     string Email,

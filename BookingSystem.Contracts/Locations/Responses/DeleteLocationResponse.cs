@@ -1,6 +1,7 @@
 namespace BookingSystem.Contracts.Locations.Responses;
 
-public record DeleteLocationResponse(
+public record DeleteLocationResponse
+(
 
     string? Message
 

@@ -1,6 +1,7 @@
 namespace BookingSystem.Contracts.Desks.Responses;
 
-public record GetDeskReservationResponse(
+public record GetDeskReservationResponse
+(
 
     bool Available
 
