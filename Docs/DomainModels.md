@@ -1,26 +1,26 @@
 # model
 
 location
-- id string
-- name string
-- description string?
-- desks [string] //array of desk IDs
+- id string required
+- name string required
+- description string? optional
+- desks [string] //array of desk IDs, can be empty
 
 desk
-- id string
-- locationId string
-- userId string
-- available boolean
-- startDate Date
-- endDate Date
+- id string required
+- locationId string required
+- userId string? optional
+- available boolean required (default true)
+- startDate Date?
+- endDate Date?
 
 user
-- id string
-- firstName string
-- lastName string
-- email string Unique
-- password string Unique
-- role string {admin / employee}
+- id string required
+- firstName string required
+- lastName string required
+- email string Unique required
+- password string required
+- role string {admin / employee} required
 
-one loc to many desks
-one desk to one user
+one location has many desks
+one desk can be booked by one user

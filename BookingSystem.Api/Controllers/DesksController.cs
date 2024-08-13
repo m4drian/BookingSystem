@@ -8,8 +8,8 @@ namespace BookingSystem.Api.Controllers;
 [Authorize]
 public class DesksController : ControllerBase
 {
-    [HttpGet("list")]
-    public IActionResult ListDesks()
+    [HttpGet]
+    public IActionResult GetDesks()
     {
         return Ok(Array.Empty<string>());
     }

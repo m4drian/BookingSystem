@@ -1,84 +1,76 @@
 # Endpoints
 
-## Create Location:
+## User Management
 
+- Registration:
+POST /api/auth/register
+
+- Login:
+POST /api/auth/login
+
+## Location Management
+
+- Create Location (admin only):
 POST /api/locations
-Request body: { name: string }
 
-Get All Locations:
+- Get All Locations:
 GET /api/locations
 
-Update Location:
+- Update Location (admin only):
 PUT /api/locations/{locationId}
-Request body: { name: string }
 
-Delete Location:
+- Delete Location:
 DELETE /api/locations/{locationId}
+
+- Get Desks in Location (admins can see who reserved them, employees can only see if they are aviable):
+GET /api/locations/{locationId}/desks
 
 ## Desk Management
 
-Create Desk:
-POST /api/locations/{locationId}/desks
+- Create Desk (admin only):
+POST /api/desks/{locationId}
 
-Get Desks in Location:
-GET /api/locations/{locationId}/desks
-
-Delete Desk:
+- Delete Desk (admin only):
 DELETE /api/desks/{deskId}
 
+- Update Desk Reservation
+(admins can remove reservation and change desk details except date, employees can reserve desk or cancel their own reservation):
+POST /api/desks/reservation
 
-## Reservations
-Create Reservation:
-POST /api/reservations/{reservationId}
+Check if desk is reserved:
+GET /api/desks/{deskId}
 
-Delete Reservation:
-DELETE /api/reservations/{reservationId}
-
-## Desk Reservations
-
-Get Desk Reservations for Location:
-GET /api/locations/{locationId}/reservations
-
-## Employee Endpoints
-
-Get Available Desks:
-GET /api/desks?locationId={locationId}
-
-Book Desk:
-POST /api/reservations
-Request body: { deskId: string, startDate: Date, endDate: Date }
-
-Get My Reservations:
-GET /api/reservations
-
-Change Reservation:
-PUT /api/reservations/{reservationId}
-Request body: { deskId: string }
+Check all desks (admin only):
+GET /api/desks
 
 
-# model
+# Information about models
 
 location
-- id string
-- name string
-- desks [string] //array of desk IDs
+- Id string required
+- Name string required
+- Description string? optional
+- Desks [string] //array of desk IDs, can be empty
 
 desk
-- id string
-- locationId string
-- userId string
-- available boolean
-- startDate Date
-- endDate Date
+- Id string required
+- LocationId string required
+- UserEmail string? optional
+- Available boolean required (default true)
+- StartDate date? optional
+- EndDate date? optional
 
 user
-- id string
-- firstName string
-- lastName string
-- email string Unique
-- password string Unique
-- role string {admin / employee}
+- Id string required
+- FirstName string required
+- LastName string required
+- Email string unique required
+- Password string required
+- Role string {admin / employee} required
 
+one location has many desks
+one desk can be booked by one user
+user can book only one desk
 
 ## Requirements
 Administration:

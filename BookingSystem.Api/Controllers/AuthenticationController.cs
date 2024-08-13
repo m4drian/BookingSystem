@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookingSystem.Api.Controllers;
 
 [ApiController]
-[Route("auth")]
+[Route("api/auth")]
 [AllowAnonymous]
 public class AuthenticationController : ControllerBase
 {

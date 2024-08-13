@@ -1,6 +1,6 @@
 @host=http://localhost:5275
 
-POST {{host}}/auth/login
+POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###
 
-POST {{host}}/auth/login
+POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {

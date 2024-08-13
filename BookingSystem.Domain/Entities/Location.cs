@@ -14,6 +14,5 @@ public class Location{
     [Required(AllowEmptyStrings = true)]
     public string? Description { get; set; }
     
-    [AllowNull]
-    public List<Desk>? Desks { get; set; } = null!;
+    public ICollection<Desk> Desks { get; set; } = new List<Desk>();
 }

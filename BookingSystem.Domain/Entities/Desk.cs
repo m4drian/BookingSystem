@@ -1,19 +1,30 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BookingSystem.Domain.Entities;
 
 public class Desk{
     [Key]
+    [Required]
     public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
     public int LocationId { get; set; }
 
-    public int UserId { get; set; }
+    [Required]
+    [ForeignKey(nameof(LocationId))]
+    public required Location Location { get; set; }
+
+    [AllowNull]
+    public string? UserEmail { get; set; }
     
-    public bool available { get; set; }
+    [Required]
+    public bool Available { get; set; } = true;
 
-    public DateTime startDate { get; set; }
+    [AllowNull]
+    public DateTime? ReservationStartDate { get; set; }
 
-    public DateTime endDate { get; set; }
+    [AllowNull]
+    public DateTime? ReservationEndDate { get; set; }
 }

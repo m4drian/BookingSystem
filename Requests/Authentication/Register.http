@@ -1,6 +1,6 @@
 @host=http://localhost:5275
 
-POST {{host}}/auth/register
+POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 ###
 
-POST {{host}}/auth/register
+POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 ### invalid request
 
-POST {{host}}/auth/register
+POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
