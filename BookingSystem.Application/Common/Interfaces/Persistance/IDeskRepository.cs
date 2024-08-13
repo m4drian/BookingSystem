@@ -4,6 +4,11 @@ namespace BookingSystem.Application.Authentication.Common.Interfaces.Persistance
 
 public interface IDeskRepository
 {
-    User? GetUserByEmail(string email);
-    void Add(Desk desk);
+    void Add(Desk desk, Guid locationId);
+    List<Desk>? GetAllDesks();
+    // to check if exists
+    Desk? GetDeskById(Guid deskId);
+    void UpdateDeskAdmin(Desk desk);
+    void ReserveDeskEmployee(Desk desk);
+    void DeleteDesk(Guid deskId);
 }

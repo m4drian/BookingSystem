@@ -7,13 +7,34 @@ public class DeskRepository : IDeskRepository
 {
     private static readonly List<Desk> _desks = new();
 
-    public void Add(Desk desk)
+    public void Add(Desk desk, Guid locationId)
     {
         _desks.Add(desk);
+        throw new NotImplementedException();
     }
 
-    public User? GetUserByEmail(string email)
+    public void DeleteDesk(Guid deskId)
     {
-        return null;
+        throw new NotImplementedException();
+    }
+
+    public List<Desk>? GetAllDesks()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Desk? GetDeskById(Guid deskId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ReserveDeskEmployee(Desk desk)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateDeskAdmin(Desk desk)
+    {
+        throw new NotImplementedException();
     }
 }

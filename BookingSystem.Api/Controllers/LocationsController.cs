@@ -23,14 +23,6 @@ public class LocationsController : ControllerBase
         return Ok(request);
     }
 
-    [HttpPut("{locationName}")]
-    public IActionResult UpdateLocation(
-        UpdateLocationRequest request, 
-        string locationName)
-    {
-        return Ok(request);
-    }
-
     [HttpGet("all")]
     public IActionResult GetLocations(
         GetLocationsRequest request)
@@ -44,6 +36,14 @@ public class LocationsController : ControllerBase
         string locationName)
     {
         return Ok(Array.Empty<string>());
+    }
+
+    [HttpPut("{locationName}")]
+    public IActionResult UpdateLocation(
+        UpdateLocationRequest request, 
+        string locationName)
+    {
+        return Ok(request);
     }
 
     [HttpDelete("{locationName}")]

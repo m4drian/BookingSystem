@@ -1,8 +1,9 @@
 namespace BookingSystem.Contracts.Desks;
 
 public record UpdateDeskEmployeeRequest(
-    int DeskId,
+    string DeskId,
     string UserEmail,
+    bool Available,
     DateTime StartDate,
     DateTime? EndDate
 );

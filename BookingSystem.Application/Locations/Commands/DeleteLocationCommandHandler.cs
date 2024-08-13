@@ -8,38 +8,35 @@ using BookingSystem.Application.Locations.Common;
 
 namespace BookingSystem.Application.Locations.Commands;
 
-public class CreateLocationCommandHandler
-    : IRequestHandler<CreateLocationCommand, LocationResult>
+public class DeleteLocationCommandHandler
+    : IRequestHandler<DeleteLocationCommand, LocationResult>
 {
     
     private readonly ILocationRepository _locationRepository;
 
-    public CreateLocationCommandHandler(
+    public DeleteLocationCommandHandler(
         ILocationRepository locationRepository)
     {
         _locationRepository = locationRepository;
     }
 
-    public async Task<LocationResult> Handle(
-        CreateLocationCommand request, 
-        CancellationToken cancellationToken)
+    public async Task<LocationResult> Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
         
         // check if location exists
-        if(_locationRepository.GetLocationByName(request.Name) != null)
+        if(_locationRepository.GetLocationByName(request.Name) == null)
         {
             throw new DuplicateLocationException();
         }
 
-        // create location, generate ID and persist to DB
         var location = new Location
         {
             Name = request.Name,
-            Description = request.Description,
+            Description = "",
         };
 
-        _locationRepository.Add(location);
+        _locationRepository.Delete(location);
 
         return new LocationResult(
             location);

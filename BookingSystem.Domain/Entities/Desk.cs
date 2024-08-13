@@ -11,7 +11,7 @@ public class Desk
     public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
-    public int LocationId { get; set; }
+    public Guid LocationId { get; set; }
 
     [Required]
     [ForeignKey(nameof(LocationId))]

@@ -25,6 +25,20 @@ public class DesksController : ControllerBase
         return Ok(Array.Empty<string>());
     }
 
+    [HttpGet("all")]
+    public IActionResult GetDesks(GetDesksRequest request)
+    {
+        return Ok(Array.Empty<string>());
+    }
+
+    [HttpGet("{deskId}")]
+    public IActionResult GetDeskReservation(
+        GetDeskReservationRequest request, 
+        string deskId)
+    {
+        return Ok(Array.Empty<string>());
+    }
+
     [HttpPut("reservation/{deskId}")]
     public IActionResult UpdateDeskEmployee(
         UpdateDeskEmployeeRequest request, 
@@ -36,20 +50,6 @@ public class DesksController : ControllerBase
     [HttpPut("reservation/admin/{deskId}")]
     public IActionResult UpdateDeskAdmin(
         UpdateDeskAdminRequest request, 
-        string deskId)
-    {
-        return Ok(Array.Empty<string>());
-    }
-
-    [HttpGet("all")]
-    public IActionResult GetDesks(GetDesksRequest request)
-    {
-        return Ok(Array.Empty<string>());
-    }
-
-    [HttpGet("{deskId}")]
-    public IActionResult GetDeskReservation(
-        GetDeskReservationRequest request, 
         string deskId)
     {
         return Ok(Array.Empty<string>());
