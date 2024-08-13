@@ -24,21 +24,29 @@ public class DeleteLocationCommandHandler
     {
         await Task.CompletedTask;
         
+        var location = _locationRepository.GetLocationByName(request.Name);
+
         // check if location exists
-        if(_locationRepository.GetLocationByName(request.Name) == null)
+        if(location == null)
         {
             throw new DuplicateLocationException();
         }
 
-        var location = new Location
+        // check if location has desks
+        if(!location?.Desks?.Any() ?? false)
+        {
+            throw new DuplicateLocationException();
+        }
+
+        var locationToDelete = new Location
         {
             Name = request.Name,
             Description = "",
         };
 
-        _locationRepository.Delete(location);
+        _locationRepository.Delete(locationToDelete);
 
         return new LocationResult(
-            location);
+            locationToDelete);
     }
 }

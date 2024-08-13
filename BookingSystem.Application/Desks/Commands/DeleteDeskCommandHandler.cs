@@ -31,6 +31,12 @@ public class DeleteDeskCommandHandler
             throw new DuplicateLocationException();
         }
 
+        // cannot remove if there is a reservation
+        if(desk.Available == false)
+        {
+            throw new DuplicateLocationException();
+        }
+
         _deskRepository.DeleteDesk(new Guid(request.DeskId));
 
         return new DeskResult(

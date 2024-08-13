@@ -34,10 +34,26 @@ public class UpdateDeskAdminCommandHandler
             throw new DuplicateLocationException();
         }
 
-        desk.UserEmail = request.UserEmail ?? desk.UserEmail;
+        // if desk changed to available, then clear employees booking
+        // leave values as they are if no value specified
         desk.Available = request.Available ?? desk.Available;
-        desk.ReservationStartDate = request.StartDate ?? desk.ReservationStartDate;
-        desk.ReservationEndDate = request.EndDate ?? desk.ReservationEndDate;
+
+        // this is the only case where Available can be null
+        if (request.Available.HasValue && request.Available.Value)
+        {
+            desk.UserEmail = request.Available == true ? "" : 
+                (request.UserEmail ?? desk.UserEmail);
+            desk.ReservationStartDate = request.Available == true ? null : 
+                (request.StartDate ?? desk.ReservationStartDate);
+            desk.ReservationEndDate = request.Available == true ? null : 
+                (request.EndDate ?? desk.ReservationEndDate);
+        }
+        else
+        {
+            desk.UserEmail = request.UserEmail ?? desk.UserEmail;
+            desk.ReservationStartDate = request.StartDate ?? desk.ReservationStartDate;
+            desk.ReservationEndDate = request.EndDate ?? desk.ReservationEndDate;
+        }
 
         _deskRepository.UpdateDeskAdmin(desk);
 

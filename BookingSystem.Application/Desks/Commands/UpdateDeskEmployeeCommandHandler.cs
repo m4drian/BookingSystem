@@ -31,12 +31,24 @@ public class UpdateDeskEmployeeCommandHandler
             throw new DuplicateLocationException();
         }
 
-        desk.UserEmail = request.UserEmail;
-        // validate if can cancel
+        // employee cannot cancel booking less than 24h before reservation
+        if (request.Available == true && desk.ReservationStartDate > DateTime.UtcNow.AddDays(1))
+        {
+            throw new DuplicateLocationException();
+        }
+
+        desk.UserEmail = request.Available == false ? request.UserEmail : null;
         desk.Available = request.Available;
-        desk.ReservationStartDate = request.StartDate;
-        // end date validation
-        desk.ReservationEndDate = request.EndDate ?? desk.ReservationEndDate;
+        desk.ReservationStartDate = request.Available == false ? request.StartDate : null;
+
+        // if no end date specified, book for a day
+        // cannot book desk for more than a week
+        if (request.EndDate > request.StartDate.AddDays(6))
+        {
+            throw new DuplicateLocationException();
+        }
+
+        desk.ReservationEndDate = request.Available == false ? (request.EndDate ?? request.StartDate.AddDays(1)) : null;
 
         _deskRepository.ReserveDeskEmployee(desk);
 
