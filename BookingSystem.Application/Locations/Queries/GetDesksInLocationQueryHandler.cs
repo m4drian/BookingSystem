@@ -31,6 +31,9 @@ public class GetDesksInLocationQueryHandler
             throw new DuplicateLocationException();
         }
 
+        // Get user role from claims (assuming the role claim is named "role")
+        //var userRole = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+
         List<Desk>? desks = _locationRepository.GetDesksInLocation(request.Name);
 
         return new DesksResult(

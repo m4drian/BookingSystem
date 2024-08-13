@@ -36,6 +36,8 @@ public static class DependencyInjection
         services.AddSingleton(Options.Create(jwtSettings));
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddSingleton<IDeskRepository, DeskRepository>();
+        services.AddSingleton<ILocationRepository, LocationRepository>();
 
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters{

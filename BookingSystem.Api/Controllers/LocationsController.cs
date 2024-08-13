@@ -20,7 +20,10 @@ public class LocationsController : ControllerBase
     [HttpPost]
     public IActionResult CreateLocation(CreateLocationRequest request)
     {
-        return Ok(request);
+        if (User.HasClaim("Role", "admin"))
+        { return Ok(request); }
+
+        return BadRequest(request);
     }
 
     [HttpGet("all")]
