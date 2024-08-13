@@ -1,7 +1,10 @@
 namespace BookingSystem.Contracts.Locations;
 
-public record CreateLocationRequest
+public record UpdateLocationRequest
 {
     string Name;
+
+    string? ChangedName;
+
     string? Description;
 }

@@ -17,18 +17,18 @@ POST /api/locations
 GET /api/locations
 
 - Update Location (admin only):
-PUT /api/locations/{locationId}
+PUT /api/locations/{locationName}
 
 - Delete Location:
-DELETE /api/locations/{locationId}
+DELETE /api/locations/{locationName}
 
 - Get Desks in Location (admins can see who reserved them, employees can only see if they are aviable):
-GET /api/locations/{locationId}/desks
+GET /api/locations/{locationName}/desks
 
 ## Desk Management
 
 - Create Desk (admin only):
-POST /api/desks/{locationId}
+POST /api/desks/{locationName}
 
 - Delete Desk (admin only):
 DELETE /api/desks/{deskId}
