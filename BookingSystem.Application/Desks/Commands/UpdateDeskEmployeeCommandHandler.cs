@@ -1,10 +1,8 @@
 using BookingSystem.Application.Authentication.Common.Errors;
 using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
-using BookingSystem.Domain.Entities;
 using MediatR;
-using BookingSystem.Application.Locations.Common;
-using BookingSystem.Application.Desks.Commands;
 using BookingSystem.Application.Desks.Common;
+using BookingSystem.Application.Authentication.Common.Interfaces.Services;
 
 namespace BookingSystem.Application.Desks.Commands;
 
@@ -12,11 +10,14 @@ public class UpdateDeskEmployeeCommandHandler
     : IRequestHandler<UpdateDeskEmployeeCommand, DeskResult>
 {
     private readonly IDeskRepository _deskRepository;
+    private readonly IDateTimeProvider _clock;
 
     public UpdateDeskEmployeeCommandHandler(
-        IDeskRepository deskRepository)
+        IDeskRepository deskRepository,
+        IDateTimeProvider clock)
     {
         _deskRepository = deskRepository;
+        _clock = clock;
     }
 
     public async Task<DeskResult> Handle(UpdateDeskEmployeeCommand request, CancellationToken cancellationToken)
@@ -32,7 +33,7 @@ public class UpdateDeskEmployeeCommandHandler
         }
 
         // employee cannot cancel booking less than 24h before reservation
-        if (request.Available == true && desk.ReservationStartDate > DateTime.UtcNow.AddDays(1))
+        if (request.Available == true && desk.ReservationStartDate > _clock.UtcNow.AddDays(1))
         {
             throw new DuplicateLocationException();
         }
@@ -41,14 +42,22 @@ public class UpdateDeskEmployeeCommandHandler
         desk.Available = request.Available;
         desk.ReservationStartDate = request.Available == false ? request.StartDate : null;
 
-        // if no end date specified, book for a day
         // cannot book desk for more than a week
         if (request.EndDate > request.StartDate.AddDays(6))
         {
             throw new DuplicateLocationException();
         }
 
-        desk.ReservationEndDate = request.Available == false ? (request.EndDate ?? request.StartDate.AddDays(1)) : null;
+        if (request.Available)
+        {
+            // in case reservation is cancelled, dates are reset
+            desk.ReservationEndDate = null;
+        }
+        else
+        {
+            // if no end date specified, book for a day
+            desk.ReservationEndDate = request.EndDate ?? request.StartDate.AddDays(1);
+        }
 
         _deskRepository.ReserveDeskEmployee(desk);
 
