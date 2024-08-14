@@ -57,7 +57,7 @@ public class CreateDeskCommandHandler
             desk);
     }
 
-    private void CreateDeskValidation(CreateDeskCommand request)
+    public void CreateDeskValidation(CreateDeskCommand request)
     {
         if (string.IsNullOrEmpty(request.LocationName))
         {

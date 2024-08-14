@@ -63,7 +63,7 @@ public class UpdateDeskAdminCommandHandler
             desk);
     }
 
-    private void UpdateDeskValidation(UpdateDeskAdminCommand request)
+    public void UpdateDeskValidation(UpdateDeskAdminCommand request)
     {
 
         if (string.IsNullOrEmpty(request.DeskId))

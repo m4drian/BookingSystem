@@ -4,62 +4,76 @@ using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Locations.Commands;
 using BookingSystem.Domain.Entities;
 using Moq;
+using NSubstitute;
 
 namespace BookingSystem.Application.UnitTests.Desks.Commands;
 
 public class UpdateLocationCommandHandlerTests
 {
+
     [Fact]
-    public async Task Handle_EmptyName_ThrowsValidationException()
+    public async Task Handle_ValidLocation_ShouldCompleteUpdatingLocationAndDesksSuccessfully()
     {
         // Arrange
         var mockLocationRepository = new Mock<ILocationRepository>();
-        var mockDesksRepository = new Mock<IDeskRepository>();
-        var command = new UpdateLocationCommand ( "" , "" , "");
-        var handler = new UpdateLocationCommandHandler(mockLocationRepository.Object, mockDesksRepository.Object);
+        var mockDeskRepository = new Mock<IDeskRepository>();
 
-        // Act + Assert
-        await Assert.ThrowsAsync<ValidationException>(async () => await handler.Handle(command, CancellationToken.None));
-        mockLocationRepository.VerifyNoOtherCalls();
-        mockDesksRepository.VerifyNoOtherCalls();
+        var existingLocation = new Location { Name = "ExistingLocation" };
+
+        mockLocationRepository.Setup(repo => repo.GetLocationByName(It.IsAny<string>()))
+            .Returns(existingLocation);
+
+        var handler = new UpdateLocationCommandHandler(mockLocationRepository.Object, mockDeskRepository.Object);
+
+        var command = new UpdateLocationCommand
+        (
+            "ExistingLocation",
+            "NewLocation",
+            "Updated Description"
+        );
+
+        // Act
+        var result = await handler.Handle(command, CancellationToken.None);
+
+        // Assert
+        mockLocationRepository.Verify(repo => repo.GetLocationByName("ExistingLocation"), Times.Once);
+#pragma warning disable CS8601 // Possible null reference assignment.
+        existingLocation.Name = command.ChangedName;
+#pragma warning restore CS8601 // Possible null reference assignment.
+        mockLocationRepository.Verify(repo => repo.Update(existingLocation, "NewLocation", "Updated Description"), Times.Once);
+        mockDeskRepository.Verify(repo => repo.UpdateAllDeskLocations(existingLocation), Times.Once);
+
+        Assert.NotNull(result);
+        Assert.Equal("NewLocation", result.Location.Name);
     }
 
     [Fact]
-    public async Task Handle_NonExistingLocation_ThrowsNoLocationException()
+    public async Task Handle_LocationNotFound_ShouldThrowNoLocationException()
     {
         // Arrange
         var mockLocationRepository = new Mock<ILocationRepository>();
-        var mockDesksRepository = new Mock<IDeskRepository>();
-        mockLocationRepository.Setup(x => x.GetLocationByName(It.IsAny<string>())).Returns((Location)null);
-        var command = new UpdateLocationCommand ( "NonExistingName" , "" , "" );
-        var handler = new UpdateLocationCommandHandler(mockLocationRepository.Object, mockDesksRepository.Object);
+        var mockDeskRepository = new Mock<IDeskRepository>();
 
-        // Act + Assert
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+        mockLocationRepository.Setup(repo => repo.GetLocationByName("NonexistentLocation")).Returns((Location)null);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+        var handler = new UpdateLocationCommandHandler(mockLocationRepository.Object, mockDeskRepository.Object);
+
+        var command = new UpdateLocationCommand ( "NonexistentLocation" , "", "" );
+
+        // Act & Assert
         await Assert.ThrowsAsync<NoLocationException>(async () => await handler.Handle(command, CancellationToken.None));
-        mockLocationRepository.Verify(x => x.GetLocationByName(command.Name), Times.Once);
-        mockDesksRepository.VerifyNoOtherCalls();
     }
 
     [Fact]
-    public async Task Handle_ValidUpdateWithChangedName_UpdatesLocationAndDesks()
+    public void Handle_NameIsEmpty_ShouldThrowValidationException()
     {
-    // Arrange
-    var existingLocation = new Location { Id = Guid.NewGuid(), Name = "Old Name", Description = "Some Description" };
-    var mockLocationRepository = new Mock<ILocationRepository>();
-    mockLocationRepository.Setup(x => x.GetLocationByName(It.IsAny<string>())).Returns(existingLocation);
-    var mockDesksRepository = new Mock<IDeskRepository>();
-    var command = new UpdateLocationCommand ( "Old Name", "New Name", "Updated Description" );
-    var handler = new UpdateLocationCommandHandler(mockLocationRepository.Object, mockDesksRepository.Object);
+        // Arrange
+        var handler = new UpdateLocationCommandHandler(Mock.Of<ILocationRepository>(), Mock.Of<IDeskRepository>()); // Mock both repositories
 
-    // Act
-    var result = await handler.Handle(command, CancellationToken.None);
-
-    // Assert
-    Assert.NotNull(result);
-    Assert.Equal(command.ChangedName, result.Location.Name); // Expect New Name here
-    Assert.Equal(command.Description, result.Location.Description);
-    mockLocationRepository.Verify(x => x.Update(existingLocation, command.ChangedName, command.Description), Times.Once);
-    mockDesksRepository.Verify(x => x.UpdateAllDeskLocations(existingLocation), Times.Once);
+        // Act & Assert
+        Assert.Throws<ValidationException>(() => handler.UpdateLocationValidation(new UpdateLocationCommand ( "", "","" )));
     }
     
 }

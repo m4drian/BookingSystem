@@ -33,6 +33,8 @@ To run unit tests:
 dotnet test
 ```
 
+Tested specifically "BookingSystem.Application.UnitTests.Desks.Commands"
+
 Various endpoints can be tested with REST Client for Visual Studio Code, requests available in folder "Requests"
 
 # Endpoints

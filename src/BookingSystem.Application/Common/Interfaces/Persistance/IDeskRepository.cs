@@ -6,7 +6,6 @@ public interface IDeskRepository
 {
     void Add(Desk desk, Location location);
     List<Desk>? GetAllDesks();
-    // to check if exists
     Desk? GetDeskById(Guid deskId);
     void UpdateDeskAdmin(Desk desk);
     void UpdateAllDeskLocations(Location location);

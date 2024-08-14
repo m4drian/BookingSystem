@@ -43,7 +43,7 @@ public class DeleteDeskCommandHandler
             desk);
     }
 
-    private void DeleteDeskValidation(DeleteDeskCommand request)
+    public void DeleteDeskValidation(DeleteDeskCommand request)
     {
         if (string.IsNullOrEmpty(request.DeskId))
         {

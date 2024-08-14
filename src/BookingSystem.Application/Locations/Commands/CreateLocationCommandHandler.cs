@@ -46,7 +46,7 @@ public class CreateLocationCommandHandler
             location);
     }
 
-    private void CreateLocationValidation(CreateLocationCommand request)
+    public void CreateLocationValidation(CreateLocationCommand request)
     {
         if (string.IsNullOrEmpty(request.Name))
         {

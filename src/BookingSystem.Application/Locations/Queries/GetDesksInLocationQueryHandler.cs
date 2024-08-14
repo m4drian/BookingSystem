@@ -41,7 +41,7 @@ public class GetDesksInLocationQueryHandler
             desks);
     }
 
-    private void GetDesksInLocationValidation(GetDesksInLocationQuery request)
+    public void GetDesksInLocationValidation(GetDesksInLocationQuery request)
     {
         if (string.IsNullOrEmpty(request.Name))
         {

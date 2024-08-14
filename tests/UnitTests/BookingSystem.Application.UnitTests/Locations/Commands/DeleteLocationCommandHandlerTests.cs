@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Locations.Commands;
@@ -10,50 +11,73 @@ namespace BookingSystem.Application.UnitTests.Desks.Commands;
 public class DeleteLocationCommandHandlerTests
 { 
     [Fact]
-    public async Task Handle_EmptyName_ShouldThrowValidationException()
+    public async Task Handle_LocationNotFound_ShouldThrowNoLocationException()
     {
         // Arrange
         var mockLocationRepository = new Mock<ILocationRepository>();
-        var command = new CreateLocationCommand ( "" , "" );
-        var handler = new CreateLocationCommandHandler(mockLocationRepository.Object);
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+        mockLocationRepository.Setup(repo => repo.GetLocationByName("NonExistentLocation")).Returns((Location)null);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
-        // Act
-        // Assert
-        await Assert.ThrowsAsync<ValidationException>(async () => await handler.Handle(command, CancellationToken.None));
-        mockLocationRepository.Verify(x => x.GetLocationByName(It.IsAny<string>()), Times.Never);
+        var handler = new DeleteLocationCommandHandler(mockLocationRepository.Object);
+
+        // Act & Assert
+        async Task ActAndAssert() => await handler.Handle(new DeleteLocationCommand ( "NonExistentLocation" ), CancellationToken.None);
+        await Assert.ThrowsAsync<NoLocationException>(ActAndAssert);
+
+        mockLocationRepository.Verify(repo => repo.GetLocationByName("NonExistentLocation"), Times.Once);
+        mockLocationRepository.Verify(repo => repo.Delete(It.IsAny<Location>()), Times.Never);
     }
 
     [Fact]
-    public async Task Handle_DuplicateLocation_ShouldThrowDuplicateLocationException()
+    public async Task Handle_DesksInLocation_ShouldThrowDesksInLocationException()
     {
-        // Arrange
         var mockLocationRepository = new Mock<ILocationRepository>();
-        mockLocationRepository.Setup(x => x.GetLocationByName(It.IsAny<string>())).Returns(new Location());
-        var command = new CreateLocationCommand ( "Valid Name" , "Valid Description" );
-        var handler = new CreateLocationCommandHandler(mockLocationRepository.Object);
+        var mockLocation = new Location { Name = "TestLocation" };
+        mockLocationRepository.Setup(repo => repo.GetLocationByName("TestLocation")).Returns(mockLocation);
 
-        // Act
-        // Assert
-        await Assert.ThrowsAsync<DuplicateLocationException>(async () => await handler.Handle(command, CancellationToken.None));
-        mockLocationRepository.Verify(x => x.GetLocationByName(command.Name), Times.Once);
+        var handler = new DeleteLocationCommandHandler(mockLocationRepository.Object);
+
+        var deskWithLocation = new Desk { Location = mockLocation };
+        var locationWithDesks = new List<Desk>() { deskWithLocation };
+
+        mockLocation.Desks = locationWithDesks;
+
+        async Task ActAndAssert() => await handler.Handle(new DeleteLocationCommand ( "TestLocation" ), CancellationToken.None);
+        await Assert.ThrowsAsync<DesksInLocationException>(ActAndAssert);
+
+        mockLocationRepository.Verify(repo => repo.GetLocationByName("TestLocation"), Times.Once);
+        mockLocationRepository.Verify(repo => repo.Delete(It.IsAny<Location>()), Times.Never);
     }
 
     [Fact]
-    public async Task Handle_ValidLocation_ShouldReturnLocationResult()
+    public async Task Handle_ValidDeletion_ShouldDeleteLocationSuccessfully()
     {
         // Arrange
         var mockLocationRepository = new Mock<ILocationRepository>();
-        mockLocationRepository.Setup(x => x.GetLocationByName(It.IsAny<string>())).Returns(Mock.Of<Location>());
-        var command = new CreateLocationCommand ( "Valid Name", "Some Description" );
-        var handler = new CreateLocationCommandHandler(mockLocationRepository.Object);
+        var mockLocation = new Location { Name = "TestLocation" };
+        mockLocationRepository.Setup(repo => repo.GetLocationByName("TestLocation")).Returns(mockLocation);
+        mockLocationRepository.Setup(repo => repo.Delete(It.IsAny<Location>())).Verifiable();
+
+        var handler = new DeleteLocationCommandHandler(mockLocationRepository.Object);
 
         // Act
-        var result = await handler.Handle(command, CancellationToken.None);
+        var result = await handler.Handle(new DeleteLocationCommand ( "TestLocation" ), CancellationToken.None);
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(command.Name, result.Location.Name);
-        Assert.Equal(command.Description, result.Location.Description);
-        mockLocationRepository.Verify(x => x.GetLocationByName(command.Name), Times.Once);
+        Assert.Equal(mockLocation.Name, result.Location.Name);
+        mockLocationRepository.Verify(repo => repo.GetLocationByName("TestLocation"), Times.Once);
+        mockLocationRepository.Verify(repo => repo.Delete(It.IsAny<Location>()), Times.Once);
+    }
+
+    [Fact]
+    public void Handle_NameIsEmpty_ShouldThrowValidationException()
+    {
+        // Arrange
+        var handler = new DeleteLocationCommandHandler(Mock.Of<ILocationRepository>()); // Mock the repository
+
+        // Act & Assert
+        Assert.Throws<ValidationException>(() => handler.DeleteLocationValidation(new DeleteLocationCommand ( "" )));
     }
 }

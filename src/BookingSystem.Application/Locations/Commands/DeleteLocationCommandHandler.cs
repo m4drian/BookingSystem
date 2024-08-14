@@ -51,7 +51,7 @@ public class DeleteLocationCommandHandler
             locationToDelete);
     }
 
-    private void DeleteLocationValidation(DeleteLocationCommand request)
+    public void DeleteLocationValidation(DeleteLocationCommand request)
     {
         if (string.IsNullOrEmpty(request.Name))
         {

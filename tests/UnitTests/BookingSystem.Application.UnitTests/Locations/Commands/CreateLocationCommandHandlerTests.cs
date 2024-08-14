@@ -46,8 +46,6 @@ public class CreateLocationCommandHandlerTests
     {
         // Arrange
         var mockLocationRepository = new Mock<ILocationRepository>();
-        //mockLocationRepository.Setup(x => x.GetLocationByName(It.IsAny<string>())).Returns((Location)null);
-        //mockLocationRepository.Setup(x => x.GetLocationByName(It.IsAny<string>())).Returns(Mock.Of<Location>());
         mockLocationRepository.Setup(x => x.GetLocationByName(It.IsAny<string>()))
             .Returns((string name) => name == "Valid Name" ? Mock.Of<Location>() : null);
         var command = new CreateLocationCommand ( "Valid Name2", "Valid Description" );

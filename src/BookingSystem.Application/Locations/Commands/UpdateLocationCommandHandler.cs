@@ -45,7 +45,7 @@ public class UpdateLocationCommandHandler
             location);
     }
 
-    private void UpdateLocationValidation(UpdateLocationCommand request)
+    public void UpdateLocationValidation(UpdateLocationCommand request)
     {
         if (string.IsNullOrEmpty(request.Name))
         {

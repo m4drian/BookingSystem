@@ -96,7 +96,7 @@ public class UpdateDeskEmployeeCommandHandler
             desk);
     }
 
-    private void UpdateDeskValidation(UpdateDeskEmployeeCommand request)
+    public void UpdateDeskValidation(UpdateDeskEmployeeCommand request)
     {
 
         if (string.IsNullOrEmpty(request.DeskId))

@@ -35,7 +35,7 @@ public class GetDeskReservationQueryHandler
             desk.Available);
     }
 
-    private void GetDeskReservationValidation(GetDeskReservationQuery request)
+    public void GetDeskReservationValidation(GetDeskReservationQuery request)
     {
 
         if (string.IsNullOrEmpty(request.DeskId))
