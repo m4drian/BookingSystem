@@ -16,7 +16,7 @@ namespace BookingSystem.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class LocationsController : ControllerBase
 {
     private readonly ISender _mediator;
@@ -30,8 +30,8 @@ public class LocationsController : ControllerBase
     public async Task<IActionResult> CreateLocation(CreateLocationRequest request)
     {
         try{
-            if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }
+            /*if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }*/
 
             var command = new CreateLocationCommand(
                 request.Name,
@@ -169,8 +169,8 @@ public class LocationsController : ControllerBase
         string locationName)
     {
         try{
-            if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }
+            /*if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }*/
 
             var command = new UpdateLocationCommand(
                 locationName,
@@ -209,8 +209,8 @@ public class LocationsController : ControllerBase
         string locationName)
     {
         try{
-            if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }
+            /*if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }*/
 
             var command = new DeleteLocationCommand(
                 locationName ?? request.Name

@@ -51,7 +51,7 @@ public class CreateDeskCommandHandler
             ReservationEndDate = request.EndDate,
         };
 
-        _deskRepository.Add(desk, location.Id);
+        _deskRepository.Add(desk, location);
 
         return new DeskResult(
             desk);
@@ -64,12 +64,12 @@ public class CreateDeskCommandHandler
             throw new ValidationException("Location name is required");
         }
 
-        if (string.IsNullOrEmpty(request.UserEmail) || !ValidateHelper.IsValidEmail(request.UserEmail))
+        if (!string.IsNullOrEmpty(request.UserEmail) && !ValidateHelper.IsValidEmail(request.UserEmail))
         {
             throw new ValidationException("Bad email format");
         }
     
-        if (request.StartDate == null || request.StartDate < _clock.UtcNow)
+        if (request.StartDate != null && request.StartDate < _clock.UtcNow)
         {
             throw new ValidationException("Start date must be in the future");
         }

@@ -36,21 +36,46 @@ public class UpdateDeskEmployeeCommandHandler
             throw new NoDeskException();
         }
 
+        // employee can only change his own booking
+        if(desk.UserEmail != request.UserEmail && desk.UserEmail != null)
+        {
+            throw new WrongDeskSelectedException();
+        }
+
+        if(request.Available == true && desk.UserEmail == null)
+        {
+            throw new WrongDeskSelectedException();
+        }
+
         // employee cannot cancel booking less than 24h before reservation
-        if (request.Available == true && desk.ReservationStartDate > _clock.UtcNow.AddDays(1))
+        if (request.Available == true && desk.ReservationStartDate < _clock.UtcNow.AddDays(1))
         {
             throw new CancellationTooEarlyException();
         }
-
-        desk.UserEmail = request.Available == false ? request.UserEmail : null;
-        desk.Available = request.Available;
-        desk.ReservationStartDate = request.Available == false ? request.StartDate : null;
 
         // cannot book desk for more than a week
         if (request.EndDate > request.StartDate.AddDays(6))
         {
             throw new BookingTooLongException();
         }
+
+        if(desk.Available == false && request.Available == false)
+        {
+            throw new CannotBookTwiceException();
+        }
+
+        if(desk.Available == true && request.Available == true)
+        {
+            throw new CannotCancelEmptyDeskException();
+        }
+
+        if(_deskRepository.DidUserAlreadyBook(request.UserEmail) && request.Available == false)
+        {
+            throw new CannotBookTwiceException();
+        }
+
+        desk.UserEmail = request.Available == false ? request.UserEmail : null;
+        desk.ReservationStartDate = request.Available == false ? request.StartDate : null;
 
         if (request.Available)
         {
@@ -62,6 +87,8 @@ public class UpdateDeskEmployeeCommandHandler
             // if no end date specified, book for a day
             desk.ReservationEndDate = request.EndDate ?? request.StartDate.AddDays(1);
         }
+
+        desk.Available = request.Available;
 
         _deskRepository.ReserveDeskEmployee(desk);
 
@@ -77,18 +104,23 @@ public class UpdateDeskEmployeeCommandHandler
             throw new ValidationException("Desk Id is required");
         }
 
-        if (string.IsNullOrEmpty(request.UserEmail) || !ValidateHelper.IsValidEmail(request.UserEmail))
+        if (!string.IsNullOrEmpty(request.UserEmail) && !ValidateHelper.IsValidEmail(request.UserEmail))
         {
             throw new ValidationException("Bad email format");
         }
     
-        if (request.StartDate < _clock.UtcNow)
+        if ((request.StartDate < _clock.UtcNow) && request.Available == false)
         {
             throw new ValidationException("Start date must be in the future");
         }
 
-        if (request.EndDate.HasValue && request.EndDate < request.StartDate)
+        if (request.EndDate.HasValue)
         {
+            if(request.EndDate > request.StartDate)
+            {
+                return;
+            }
+            
             throw new ValidationException("End date must be greater than or equal to start date");
         }
     }

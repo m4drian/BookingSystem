@@ -16,7 +16,7 @@ namespace BookingSystem.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class DesksController : ControllerBase
 {
     private readonly ISender _mediator;
@@ -32,8 +32,8 @@ public class DesksController : ControllerBase
         string locationName)
     {
         try{
-            if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }
+            /*if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }*/
 
             var command = new CreateDeskCommand(
                 locationName,
@@ -69,11 +69,11 @@ public class DesksController : ControllerBase
     }
 
     [HttpGet("all")]
-    public async Task<IActionResult> GetDesks(GetDesksRequest request)
+    public async Task<IActionResult> GetDesks()
     {
         try{
-            if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }
+            /*if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(); }*/
 
             var command = new GetDesksQuery(
             );
@@ -156,8 +156,8 @@ public class DesksController : ControllerBase
         string deskId)
     {
         try{
-            if (!User.HasClaim("Role", "employee"))
-            { return Unauthorized(request); }
+            /*if (!User.HasClaim("Role", "employee"))
+            { return Unauthorized(request); }*/
 
             var command = new UpdateDeskEmployeeCommand(
                 deskId ?? request.DeskId,
@@ -170,7 +170,7 @@ public class DesksController : ControllerBase
             DeskResult deskResult = await _mediator.Send(command);
 
             var response = new UpdateDeskResponse(
-                deskResult.desk.Available == false ? "Successfully booked selected desk." : "Selected desk is no longer booked."
+                "Updated reservation for selected desk."
             );
 
             return Ok(response);
@@ -197,9 +197,9 @@ public class DesksController : ControllerBase
         UpdateDeskAdminRequest request, 
         string deskId)
     {
-        try{
-            if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }
+        //try{
+            /*if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }*/
 
             var command = new UpdateDeskAdminCommand(
                 deskId ?? request.DeskId,
@@ -212,11 +212,11 @@ public class DesksController : ControllerBase
             DeskResult deskResult = await _mediator.Send(command);
 
             var response = new UpdateDeskResponse(
-                JsonSerializer.Serialize(deskResult.desk).ToString()
+                "Selected desk updated successfully."
             );
 
             return Ok(response);
-        }
+        /*}
         catch (ValidationException vex)
         {
             return BadRequest(new { message = vex.Message });
@@ -231,7 +231,7 @@ public class DesksController : ControllerBase
             {
                 return StatusCode(500, "An error occurred");
             }
-        }
+        }*/
     }
 
     [HttpDelete("{deskId}")]
@@ -240,8 +240,8 @@ public class DesksController : ControllerBase
         string deskId)
     {
         try{
-            if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }
+            /*if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }*/
 
             var command = new DeleteDeskCommand(
                 deskId ?? request.Id

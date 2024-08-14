@@ -1,10 +1,10 @@
 @host=http://localhost:5275
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YTM5NTZlOC1kYmRiLTRhODgtYWI2Zi1iNjcxMjhmMGEwYzciLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6IjYzYjhhOGQ3LTFiZTgtNDIxNy05ZmVlLWY4MGExNDZmYzJmMCIsIlJvbGUiOiJhZG1pbiIsImV4cCI6MTcyMzYwMTIwOSwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.76CkyxgUbYTBhCoeATBv1cx-zWdSLeglf3ttMCU8e2E
-@tokenEmployee=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YmY5MzAxMi1mNGRlLTRmY2MtOTllMy03NmNiMzA5OTRiNTkiLCJnaXZlbl9uYW1lIjoiSmFzb24yIiwiZmFtaWx5X25hbWUiOiJNZWRpbmEyIiwianRpIjoiZjAwMTI3ZWUtZjQzYy00ZjBmLTg4ZDktOTM2NTNiYzFiN2RjIiwiUm9sZSI6ImVtcGxveWVlIiwiZXhwIjoxNzIzNTk4NDYzLCJpc3MiOiJtNGRyaWFuIiwiYXVkIjoibTRkcmlhbiJ9.C60ze2Js9QpagjISsVqorz7fRUKFdWXjC-qoYH7i0pw
-@deskId=1
+@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZDZiZmFhZC1kYjA2LTRmYmEtYWE1OC00YWExNDc4Zjk0MmUiLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6IjMzNzExMWJkLTQ1OGQtNDk2MC05OWIzLTU0ZGMwMzE4YjJkYSIsIlJvbGUiOiJhZG1pbiIsImV4cCI6MTcyMzYwNDUzOSwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.E5suDTqyXUsUWJh1RPzlSogVyZn-YWHvhlBhQPE5rDA
+@tokenEmployee=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMzZjY2FiOS01OTM4LTRlYTItYWMwZS00ZTUxMmNmNjBkYzgiLCJnaXZlbl9uYW1lIjoiSmFzb24yIiwiZmFtaWx5X25hbWUiOiJNZWRpbmEyIiwianRpIjoiMjZiYmIyNTMtMjZlZC00ZGRmLTg3MTYtY2IxNDE2YzI0MzQxIiwiUm9sZSI6ImVtcGxveWVlIiwiZXhwIjoxNzIzNjA0NTg5LCJpc3MiOiJtNGRyaWFuIiwiYXVkIjoibTRkcmlhbiJ9.KnKeTiFyxsBi0joIt4l9fOzn-UOZoYrE8ZzpF4f9zT8
+@deskId=84ba65b5-3b3e-4e02-a719-f65eda1c2a5c
 
 POST {{host}}/api/desks/Office2
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 Content-Type: application/json
 
 {
@@ -17,54 +17,87 @@ Content-Type: application/json
 
 ###
 
-GET {{host}}/api/desks/all
-Authorization: Bearer {{token}}}
+POST {{host}}/api/desks/Office2
+Authorization: Bearer {{tokenAdmin}}
 Content-Type: application/json
 
 {
-
+    "LocationName" : "Office2",
+    "Available" : true
 }
+
+###
+
+GET {{host}}/api/desks/all
+Authorization: Bearer {{tokenAdmin}}}
 
 ###
 
 GET {{host}}/api/desks/{{deskId}}
-Authorization: Bearer {{token}}}
+Authorization: Bearer {{tokenAdmin}}}
 Content-Type: application/json
 
 {
-
+    "Id" : "{{deskId}}"
 }
 
-###
+### book desk
 
-PUT /api/desks/reservation/{{deskId}}
-Authorization: Bearer {{token}}}
+PUT {{host}}/api/desks/reservation/{{deskId}}
+Authorization: Bearer {{tokenAdmin}}}
 Content-Type: application/json
 
 {
     "DeskId" : "{{deskId}}",
-    "Available" : true,
-    "StartDate" : "{{ 2024-08-20 }}T{{ 08:00:00 }}Z",
-    "EndDate": "{{ 2024-08-21 }}T{{ 10:00:00 }}Z"
+    "UserEmail" : "jmedina@email.com",
+    "Available" : false,
+    "StartDate" : "2024-08-20T08:00:00Z",
+    "EndDate": "2024-08-21T10:00:00Z"
 }
 
-###
+### cancel booking
 
-PUT /api/desks/reservation/admin/{{deskId}}
+PUT {{host}}/api/desks/reservation/{{deskId}}
 Authorization: Bearer {{tokenEmployee}}}
 Content-Type: application/json
 
 {
     "DeskId" : "{{deskId}}",
-    "UserEmail": "jmedina2@email.com",
-    "Available" : false,
-    "StartDate" : "{{ 2024-08-20 }}T{{ 08:00:00 }}Z"
+    "UserEmail" : "jmedina@email.com",
+    "Available" : true
 }
 
-###
+### only Aviable matters here, it will make desk ready for booking
+
+PUT {{host}}/api/desks/reservation/admin/{{deskId}}
+Authorization: Bearer {{tokenAdmin}}}
+Content-Type: application/json
+
+{
+    "DeskId" : "{{deskId}}",
+    "UserEmail": "jmedina2@email.com",
+    "Available" : true,
+    "StartDate" : "2024-08-22T08:00:00Z"
+}
+
+### this should do nothing
+
+PUT {{host}}/api/desks/reservation/admin/{{deskId}}
+Authorization: Bearer {{tokenAdmin}}}
+Content-Type: application/json
+
+{
+    "DeskId" : "{{deskId}}",
+    "UserEmail": null,
+    "Available" : false,
+    "StartDate" : "2024-08-21T08:00:00Z",
+    "EndDate" : "2024-08-22T08:00:00Z"
+}
+
+### delete desk
 
 DELETE {{host}}/api/desks/{{deskId}}
-Authorization: Bearer {{token}}}
+Authorization: Bearer {{tokenAdmin}}}
 Content-Type: application/json
 
 {

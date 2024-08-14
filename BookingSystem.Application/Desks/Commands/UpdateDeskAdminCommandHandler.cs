@@ -31,16 +31,19 @@ public class UpdateDeskAdminCommandHandler
     public async Task<DeskResult> Handle(UpdateDeskAdminCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
-
-        UpdateDeskValidation(request);
         
-        var desk = _deskRepository.GetDeskById(new Guid(request.DeskId));
+        Desk? desk = _deskRepository.GetDeskById(new Guid(request.DeskId));
 
         // check if desk exists
         if(desk == null)
         {
             throw new NoDeskException();
         }
+
+        UpdateDeskValidation(request);
+
+        // as per project requirments - admin cannot change dates or emails, 
+        // he can only remove them
 
         // if desk changed to available, then clear employees booking
         // leave values as they are if no value specified
@@ -49,18 +52,11 @@ public class UpdateDeskAdminCommandHandler
         // this is the only case where Available can be null
         if (request.Available.HasValue && request.Available.Value)
         {
-            desk.UserEmail = request.Available == true ? "" : 
-                (request.UserEmail ?? desk.UserEmail);
+            desk.UserEmail = request.Available == true ? null : desk.UserEmail;
             desk.ReservationStartDate = request.Available == true ? null : 
-                (request.StartDate ?? desk.ReservationStartDate);
+                desk.ReservationStartDate;
             desk.ReservationEndDate = request.Available == true ? null : 
-                (request.EndDate ?? desk.ReservationEndDate);
-        }
-        else
-        {
-            desk.UserEmail = request.UserEmail ?? desk.UserEmail;
-            desk.ReservationStartDate = request.StartDate ?? desk.ReservationStartDate;
-            desk.ReservationEndDate = request.EndDate ?? desk.ReservationEndDate;
+                desk.ReservationEndDate;
         }
 
         _deskRepository.UpdateDeskAdmin(desk);
@@ -77,19 +73,9 @@ public class UpdateDeskAdminCommandHandler
             throw new ValidationException("Desk Id is required");
         }
 
-        if (string.IsNullOrEmpty(request.UserEmail) || !ValidateHelper.IsValidEmail(request.UserEmail))
+        if (!string.IsNullOrEmpty(request.UserEmail) && !ValidateHelper.IsValidEmail(request.UserEmail))
         {
             throw new ValidationException("Bad email format");
-        }
-    
-        if (request.StartDate == null || request.StartDate < _clock.UtcNow)
-        {
-            throw new ValidationException("Start date must be in the future");
-        }
-
-        if (request.EndDate.HasValue && request.EndDate < request.StartDate)
-        {
-            throw new ValidationException("End date must be greater than or equal to start date");
         }
     }
 }

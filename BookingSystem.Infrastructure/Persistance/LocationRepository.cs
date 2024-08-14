@@ -42,16 +42,20 @@ public class LocationRepository : ILocationRepository
     {
         var existingLocation = _locations.FirstOrDefault(l => l.Name == location.Name);
         if (existingLocation == null)
-        { return; }
+        { 
+            return; 
+        }
 
         if(changedName is not null)
         {
             existingLocation.Name = changedName;
-            existingLocation.Description = description;
         }
-        else
+        existingLocation.Description = description;
+
+        foreach (var desk in existingLocation.Desks)
         {
-            existingLocation.Description = description;
+            desk.LocationId = existingLocation.Id;
+            desk.Location = existingLocation;
         }
     }
 }

@@ -7,9 +7,11 @@ public class DeskRepository : IDeskRepository
 {
     private static readonly List<Desk> _desks = new();
 
-    public void Add(Desk desk, Guid locationId)
+    public void Add(Desk desk, Location location)
     {
-        desk.LocationId = locationId;
+        desk.LocationId = location.Id;
+        desk.Location = location;
+        location.Desks.Add(desk);
         _desks.Add(desk);
     }
 
@@ -18,6 +20,7 @@ public class DeskRepository : IDeskRepository
         var deskToRemove = _desks.FirstOrDefault(d => d.Id == deskId);
         if (deskToRemove != null)
         {
+            deskToRemove.Location.Desks.Remove(deskToRemove);
             _desks.Remove(deskToRemove);
         }
     }
@@ -25,6 +28,17 @@ public class DeskRepository : IDeskRepository
     public List<Desk>? GetAllDesks()
     {
         return _desks.ToList();
+    }
+
+    public bool DidUserAlreadyBook(string email)
+    {
+        var exists = _desks.FirstOrDefault(d => d.UserEmail == email);
+        if (exists != null)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public Desk? GetDeskById(Guid deskId)
