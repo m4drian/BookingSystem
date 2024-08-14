@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Desks.Common;
 using BookingSystem.Application.Locations.Commands;
 using BookingSystem.Application.Locations.Common;
@@ -27,46 +29,80 @@ public class LocationsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateLocation(CreateLocationRequest request)
     {
-        if (!User.HasClaim("Role", "admin"))
-        { return Unauthorized(request); }
+        try{
+            if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }
 
-        var command = new CreateLocationCommand(
-            request.Name,
-            request.Description
-        );
+            var command = new CreateLocationCommand(
+                request.Name,
+                request.Description
+            );
 
-        LocationResult locationResult = await _mediator.Send(command);
+            LocationResult locationResult = await _mediator.Send(command);
 
-        var response = new CreateLocationResponse(
-            locationResult.Location.Name
-        );
+            var response = new CreateLocationResponse(
+                locationResult.Location.Name
+            );
 
-        return Ok(response);
+            return Ok(response);
+        }
+        catch (ValidationException vex)
+        {
+            return BadRequest(new { message = vex.Message });
+        }
+        catch(Exception ex)
+        {
+            if (ex is IServiceException se)
+            {
+                return StatusCode((int)se.StatusCode, se.ErrorMessage);
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred");
+            }
+        }
     }
 
     [HttpGet("all")]
     public async Task<IActionResult> GetLocations(
         GetLocationsRequest request)
     {
-        var command = new GetLocationsQuery(
-        );
+        try{
+            var command = new GetLocationsQuery(
+            );
 
-        LocationsResult locationsResult = await _mediator.Send(command);
+            LocationsResult locationsResult = await _mediator.Send(command);
 
-        List<LocationDto>? locationsDto = locationsResult?.Locations?
-            .Select(location => new LocationDto
+            List<LocationDto>? locationsDto = locationsResult?.Locations?
+                .Select(location => new LocationDto
+                {
+                    Id = location.Id,
+                    Name = location.Name,
+                    Description = location.Description
+                })
+                .ToList();
+
+            var response = new GetLocationsResponse(
+                locationsDto
+            );
+
+            return Ok(response);
+        }
+        catch (ValidationException vex)
+        {
+            return BadRequest(new { message = vex.Message });
+        }
+        catch(Exception ex)
+        {
+            if (ex is IServiceException se)
             {
-                Id = location.Id,
-                Name = location.Name,
-                Description = location.Description
-            })
-            .ToList();
-
-        var response = new GetLocationsResponse(
-            locationsDto
-        );
-
-        return Ok(response);
+                return StatusCode((int)se.StatusCode, se.ErrorMessage);
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred");
+            }
+        }
     }
 
     [HttpGet("desks/{locationName}")]
@@ -74,41 +110,57 @@ public class LocationsController : ControllerBase
         GetDesksFromLocationRequest request, 
         string locationName)
     {
-        string role;
-        if (User.HasClaim("Role", "admin"))
-        {
-            role = "admin";
-        }
-        else
-        {
-            role = "employee";
-        }
-
-        var command = new GetDesksInLocationQuery(
-            locationName ?? request.Name,
-            role
-        );
-
-        DesksResult desksResult = await _mediator.Send(command);
-
-        List<DeskDto>? desksDto = desksResult?.desks?
-            .Select(desk => new DeskDto
+        try{
+            string role;
+            if (User.HasClaim("Role", "admin"))
             {
-                Id = desk.Id,
-                LocationId = desk.LocationId.ToString(),
-                // only admins can see who reserved the desk
-                UserEmail = role == "admin" ? desk.UserEmail : null,
-                Available = desk.Available,
-                ReservationStartDate = desk.ReservationStartDate,
-                ReservationEndDate = desk.ReservationEndDate
-            })
-            .ToList();
+                role = "admin";
+            }
+            else
+            {
+                role = "employee";
+            }
 
-        var response = new GetDesksResponse(
-            desksDto
-        );
+            var command = new GetDesksInLocationQuery(
+                locationName ?? request.Name
+            );
 
-        return Ok(response);
+            DesksResult desksResult = await _mediator.Send(command);
+
+            List<DeskDto>? desksDto = desksResult?.desks?
+                .Select(desk => new DeskDto
+                {
+                    Id = desk.Id,
+                    LocationId = desk.LocationId.ToString(),
+                    // only admins can see who reserved the desk
+                    UserEmail = role == "admin" ? desk.UserEmail : null,
+                    Available = desk.Available,
+                    ReservationStartDate = desk.ReservationStartDate,
+                    ReservationEndDate = desk.ReservationEndDate
+                })
+                .ToList();
+
+            var response = new GetDesksResponse(
+                desksDto
+            );
+
+            return Ok(response);
+        }
+        catch (ValidationException vex)
+        {
+            return BadRequest(new { message = vex.Message });
+        }
+        catch(Exception ex)
+        {
+            if (ex is IServiceException se)
+            {
+                return StatusCode((int)se.StatusCode, se.ErrorMessage);
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred");
+            }
+        }
     }
 
     [HttpPut("{locationName}")]
@@ -116,22 +168,39 @@ public class LocationsController : ControllerBase
         UpdateLocationRequest request, 
         string locationName)
     {
-        if (!User.HasClaim("Role", "admin"))
-        { return Unauthorized(request); }
+        try{
+            if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }
 
-        var command = new UpdateLocationCommand(
-            locationName,
-            request.ChangedName,
-            request.Description
-        );
+            var command = new UpdateLocationCommand(
+                locationName,
+                request.ChangedName,
+                request.Description
+            );
 
-        LocationResult locationResult = await _mediator.Send(command);
+            LocationResult locationResult = await _mediator.Send(command);
 
-        var response = new UpdateLocationResponse(
-            locationResult.Location.Name
-        );
+            var response = new UpdateLocationResponse(
+                locationResult.Location.Name
+            );
 
-        return Ok(response);
+            return Ok(response);
+        }
+        catch (ValidationException vex)
+        {
+            return BadRequest(new { message = vex.Message });
+        }
+        catch(Exception ex)
+        {
+            if (ex is IServiceException se)
+            {
+                return StatusCode((int)se.StatusCode, se.ErrorMessage);
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred");
+            }
+        }
     }
 
     [HttpDelete("{locationName}")]
@@ -139,19 +208,36 @@ public class LocationsController : ControllerBase
         DeleteLocationRequest request, 
         string locationName)
     {
-        if (!User.HasClaim("Role", "admin"))
-        { return Unauthorized(request); }
+        try{
+            if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }
 
-        var command = new DeleteLocationCommand(
-            locationName ?? request.Name
-        );
+            var command = new DeleteLocationCommand(
+                locationName ?? request.Name
+            );
 
-        LocationResult locationResult = await _mediator.Send(command);
+            LocationResult locationResult = await _mediator.Send(command);
 
-        var response = new DeleteLocationResponse(
-            locationResult.Location.Name
-        );
+            var response = new DeleteLocationResponse(
+                locationResult.Location.Name
+            );
 
-        return Ok(response);
+            return Ok(response);
+        }
+        catch (ValidationException vex)
+        {
+            return BadRequest(new { message = vex.Message });
+        }
+        catch(Exception ex)
+        {
+            if (ex is IServiceException se)
+            {
+                return StatusCode((int)se.StatusCode, se.ErrorMessage);
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred");
+            }
+        }
     }
 }

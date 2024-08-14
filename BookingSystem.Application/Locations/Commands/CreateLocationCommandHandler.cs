@@ -5,6 +5,7 @@ using BookingSystem.Application.Authentication.Common;
 using BookingSystem.Domain.Entities;
 using MediatR;
 using BookingSystem.Application.Locations.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookingSystem.Application.Locations.Commands;
 
@@ -25,11 +26,13 @@ public class CreateLocationCommandHandler
         CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
+
+        CreateLocationValidation(request);
         
         // check if location exists
         if(_locationRepository.GetLocationByName(request.Name) != null)
         {
-            throw new NoLocationException();
+            throw new DuplicateLocationException();
         }
 
         // create location, generate ID and persist to DB
@@ -43,5 +46,13 @@ public class CreateLocationCommandHandler
 
         return new LocationResult(
             location);
+    }
+
+    private void CreateLocationValidation(CreateLocationCommand request)
+    {
+        if (string.IsNullOrEmpty(request.Name))
+        {
+            throw new ValidationException("Location name is required");
+        }
     }
 }

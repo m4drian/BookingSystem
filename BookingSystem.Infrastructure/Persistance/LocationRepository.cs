@@ -1,3 +1,4 @@
+using System.Net;
 using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 using BookingSystem.Domain.Entities;
 
@@ -37,13 +38,20 @@ public class LocationRepository : ILocationRepository
         return _locations.FirstOrDefault(l => l.Name == locationName);
     }
 
-    public void Update(Location location)
+    public void Update(Location location, string? changedName, string? description)
     {
-        var existingLocation = _locations.FirstOrDefault(l => l.Id == location.Id);
-        if (existingLocation != null)
+        var existingLocation = _locations.FirstOrDefault(l => l.Name == location.Name);
+        if (existingLocation == null)
+        { return; }
+
+        if(changedName is not null)
         {
-            existingLocation.Name = location.Name;
-            existingLocation.Description = location.Description;
+            existingLocation.Name = changedName;
+            existingLocation.Description = description;
+        }
+        else
+        {
+            existingLocation.Description = description;
         }
     }
 }

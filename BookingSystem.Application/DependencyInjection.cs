@@ -26,9 +26,9 @@ public static class DependencyInjection
         /*services.AddScoped<
             IPipelineBehavior<RegisterCommand, AuthenticationResult>, 
             ValidateRegisterCommandBehavior>();*/
-        services.AddScoped<
+        /*services.AddScoped<
             IPipelineBehavior<CreateDeskCommand, DeskResult>, 
-            ValidateDesks>();
+            ValidateDesks>();*/
         //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidateBehavior<,>));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         return services;

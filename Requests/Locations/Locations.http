@@ -1,6 +1,6 @@
 @host=http://localhost:5275
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZjE2MjUwZC1hMGI5LTQ3MGYtYWFjNi01MDNkZDA0M2I3NTAiLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6ImRjMTI1NTg3LTg2YmQtNDJiYi1iZTEwLTljMDQwNmI3ZjNlZCIsIlJvbGUiOiJhZG1pbiIsImV4cCI6MTcyMzU3NTM0OSwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.Oforw0dBIH1M8o3J4eKfJk_8dLigQzcU6lNXAGIz4qI
-@tokenEmployee=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYTk2NmEwNy1kMWU4LTQ4MzItYjc4OC0zZDBmODNjYTA1NWMiLCJnaXZlbl9uYW1lIjoiSmFzb24yIiwiZmFtaWx5X25hbWUiOiJNZWRpbmEyIiwianRpIjoiNjIwNDk1NWMtMmNmMi00ZjIzLTlhOGUtZmRiNmJmMDU4MTYzIiwiUm9sZSI6ImVtcGxveWVlIiwiZXhwIjoxNzIzNTc1Mzc2LCJpc3MiOiJtNGRyaWFuIiwiYXVkIjoibTRkcmlhbiJ9._D76XWGnC6LSDROmcD_FB9SQv-nBCKC3qXE0WCWF1jo
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YTM5NTZlOC1kYmRiLTRhODgtYWI2Zi1iNjcxMjhmMGEwYzciLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6IjYzYjhhOGQ3LTFiZTgtNDIxNy05ZmVlLWY4MGExNDZmYzJmMCIsIlJvbGUiOiJhZG1pbiIsImV4cCI6MTcyMzYwMTIwOSwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.76CkyxgUbYTBhCoeATBv1cx-zWdSLeglf3ttMCU8e2E
+@tokenEmployee=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YmY5MzAxMi1mNGRlLTRmY2MtOTllMy03NmNiMzA5OTRiNTkiLCJnaXZlbl9uYW1lIjoiSmFzb24yIiwiZmFtaWx5X25hbWUiOiJNZWRpbmEyIiwianRpIjoiZjAwMTI3ZWUtZjQzYy00ZjBmLTg4ZDktOTM2NTNiYzFiN2RjIiwiUm9sZSI6ImVtcGxveWVlIiwiZXhwIjoxNzIzNTk4NDYzLCJpc3MiOiJtNGRyaWFuIiwiYXVkIjoibTRkcmlhbiJ9.C60ze2Js9QpagjISsVqorz7fRUKFdWXjC-qoYH7i0pw
 
 POST {{host}}/api/locations
 Authorization: Bearer {{token}}
@@ -22,7 +22,7 @@ Content-Type: application/json
     "description": ""
 }
 
-###
+### Bad Request
 
 POST {{host}}/api/locations
 Authorization: Bearer {{token}}
@@ -33,18 +33,28 @@ Content-Type: application/json
     "description": ""
 }
 
-###
+### get all locations
 GET {{host}}/api/locations/all
-Authorization: Bearer {{tokenEmployee}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
 
 }
 
+### get desks from location
+
+GET {{host}}/api/locations/desks/Office2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "Name" : "Office2"
+}
+
 ###
 
-PUT {{host}}/api/locations/Office1
+PUT {{host}}/api/locations/Office2
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -54,11 +64,14 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{host}}/api/locations/Office12
+POST {{host}}/api/desks/Office2
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "Name": "Office12"
+    "LocationName" : "Office2",
+    "UserEmail" : "randomGuy@email.com",
+    "Available" : false,
+    "StartDate" : "2024-08-20T08:00:00Z",
+    "EndDate": "2024-08-21T10:00:00Z"
 }
-

@@ -36,13 +36,14 @@ public class LoginQueryHandler
         // check if user exists
         if(_userRepository.GetUserByEmail(query.Email) is not User user)
         {
-            throw new Exception("User with given email doesn't exist.");
+            // this will not share details with Api layer on purpose
+            throw new UserNotFoundException();
         }
 
         // validate password
         if (user.Password != query.Password)
         {
-            throw new Exception("Invalid password.");
+            throw new InvalidPasswordException();
         }
 
         // create JWT token

@@ -36,7 +36,7 @@ public class DeleteLocationCommandHandler
         }
 
         // check if location has desks
-        if(!location?.Desks?.Any() ?? false)
+        if(location.Desks.Any())
         {
             throw new DesksInLocationException();
         }

@@ -49,10 +49,5 @@ public class GetDesksInLocationQueryHandler
         {
             throw new ValidationException("Location name is required");
         }
-
-        if (string.IsNullOrEmpty(request.Role))
-        {
-            throw new ValidationException("User role is required");
-        }
     }
 }

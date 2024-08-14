@@ -9,6 +9,6 @@ public interface ILocationRepository
     Location? GetLocationByName(string locationName);
     List<Location>? GetAllLocations();
     List<Desk>? GetDesksInLocation(string locationName); 
-    void Update(Location location);
+    void Update(Location location, string? changedName, string? description);
     void Delete(Location location);
 }

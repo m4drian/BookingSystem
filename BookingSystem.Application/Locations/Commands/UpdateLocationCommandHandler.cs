@@ -30,19 +30,14 @@ public class UpdateLocationCommandHandler
 
         UpdateLocationValidation(request);
         
+        var location = _locationRepository.GetLocationByName(request.Name);
         // check if location exists
-        if(_locationRepository.GetLocationByName(request.Name) == null)
+        if(location == null)
         {
             throw new NoLocationException();
         }
 
-        var location = new Location
-        {
-            Name = request.ChangedName ?? request.Name,
-            Description = request.Description,
-        };
-
-        _locationRepository.Update(location);
+        _locationRepository.Update(location, request.ChangedName ?? request.Name, request.Description);
 
         if(!string.IsNullOrEmpty(request.ChangedName))
         {
