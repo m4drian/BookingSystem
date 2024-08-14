@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using BookingSystem.Application.Desks.Commands;
 using BookingSystem.Application.Desks.Common;
@@ -29,24 +30,34 @@ public class DesksController : ControllerBase
         CreateDeskRequest request, 
         string locationName)
     {
-        if (!User.HasClaim("Role", "admin"))
-        { return Unauthorized(request); }
+        try{
+            if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }
 
-        var command = new CreateDeskCommand(
-            locationName,
-            request.UserEmail,
-            request.Available,
-            request.StartDate,
-            request.EndDate
-        );
+            var command = new CreateDeskCommand(
+                locationName,
+                request.UserEmail,
+                request.Available,
+                request.StartDate,
+                request.EndDate
+            );
 
-        DeskResult deskResult = await _mediator.Send(command);
+            DeskResult deskResult = await _mediator.Send(command);
 
-        var response = new CreateDeskResponse(
-            deskResult.desk.Location.Name
-        );
+            var response = new CreateDeskResponse(
+                deskResult.desk.Location.Name
+            );
 
-        return Ok(response);
+            return Ok(response);
+        }
+        catch (ValidationException vex)
+        {
+            return BadRequest(new { message = vex.Message });
+        }
+        catch(Exception)
+        {
+            return StatusCode(500, "An error occurred.");
+        }
     }
 
     [HttpGet("all")]

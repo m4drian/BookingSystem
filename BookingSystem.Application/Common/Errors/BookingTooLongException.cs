@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace BookingSystem.Application.Authentication.Common.Errors;
+namespace BookingSystem.Application.Common.Errors;
 
 public class BookingTooLongException : Exception, IServiceException
 {

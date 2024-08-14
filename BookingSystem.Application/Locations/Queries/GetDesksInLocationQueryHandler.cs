@@ -1,4 +1,4 @@
-using BookingSystem.Application.Authentication.Common.Errors;
+using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Authentication.Common.Interfaces.Authentication;
 using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 using BookingSystem.Application.Authentication.Common;

@@ -1,5 +1,5 @@
 using BookingSystem.Application.Authentication.Commands.Register;
-using BookingSystem.Application.Authentication.Common.Errors;
+using BookingSystem.Application.Common.Errors;
 using FluentValidation;
 using MediatR;
 

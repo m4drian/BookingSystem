@@ -1,6 +1,76 @@
 @host=http://localhost:5275
 
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjOTMzMmI0ZS01NjU4LTRkYmItYWZmOC0xMWRiZGRkYjU3YzkiLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6IjFlMzRmMWRmLTQwMGEtNDkwMi1iOTc3LTc1NjRjNzYxMDRmZCIsImV4cCI6MTcyMzU2MTA4OCwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.gGdex8thYgyRrYdWGGuGHXuWnXJae4at8XwtiD_zU0U
+@tokenEmployee=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYTk2NmEwNy1kMWU4LTQ4MzItYjc4OC0zZDBmODNjYTA1NWMiLCJnaXZlbl9uYW1lIjoiSmFzb24yIiwiZmFtaWx5X25hbWUiOiJNZWRpbmEyIiwianRpIjoiNjIwNDk1NWMtMmNmMi00ZjIzLTlhOGUtZmRiNmJmMDU4MTYzIiwiUm9sZSI6ImVtcGxveWVlIiwiZXhwIjoxNzIzNTc1Mzc2LCJpc3MiOiJtNGRyaWFuIiwiYXVkIjoibTRkcmlhbiJ9._D76XWGnC6LSDROmcD_FB9SQv-nBCKC3qXE0WCWF1jo
+
+@deskId=1
+
+###
+
+POST {{host}}/api/desks/Office2
+Authorization: Bearer {{token}}}
+
+{
+    "LocationName" : "Office2",
+    "UserEmail" : "randomGuy@email.com",
+    "Available" : false,
+    "StartDate" : "{{ 2024-08-20 }}T{{ 08:00:00 }}Z",
+    "EndDate": "{{ 2024-08-21 }}T{{ 10:00:00 }}Z"
+}
+
+###
+
 
 GET {{host}}/api/desks/all
 Authorization: Bearer {{token}}}
+Content-Type: application/json
+
+{
+
+}
+
+###
+
+GET {{host}}/api/desks/{{deskId}}
+Authorization: Bearer {{token}}}
+Content-Type: application/json
+
+{
+
+}
+
+###
+
+PUT /api/desks/reservation/{{deskId}}
+Authorization: Bearer {{token}}}
+Content-Type: application/json
+
+{
+    "DeskId" : "{{deskId}}",
+    "Available" : true,
+    "StartDate" : "{{ 2024-08-20 }}T{{ 08:00:00 }}Z",
+    "EndDate": "{{ 2024-08-21 }}T{{ 10:00:00 }}Z"
+}
+
+###
+
+PUT /api/desks/reservation/admin/{{deskId}}
+Authorization: Bearer {{tokenEmployee}}}
+Content-Type: application/json
+
+{
+    "DeskId" : "{{deskId}}",
+    "UserEmail": "jmedina2@email.com",
+    "Available" : false,
+    "StartDate" : "{{ 2024-08-20 }}T{{ 08:00:00 }}Z"
+}
+
+###
+
+GET {{host}}/api/desks/{{deskId}}
+Authorization: Bearer {{token}}}
+Content-Type: application/json
+
+{
+    "Id" : "{{deskId}}"
+}

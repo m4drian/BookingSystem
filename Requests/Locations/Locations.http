@@ -34,6 +34,15 @@ Content-Type: application/json
 }
 
 ###
+GET {{host}}/api/locations/all
+Authorization: Bearer {{tokenEmployee}}
+Content-Type: application/json
+
+{
+
+}
+
+###
 
 PUT {{host}}/api/locations/Office1
 Authorization: Bearer {{token}}
@@ -45,10 +54,11 @@ Content-Type: application/json
 }
 
 ###
-GET {{host}}/api/locations/all
-Authorization: Bearer {{tokenEmployee}}
+DELETE {{host}}/api/locations/Office12
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-
+    "Name": "Office12"
 }
+

@@ -1,4 +1,4 @@
-using BookingSystem.Application.Authentication.Common.Errors;
+using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Desks.Commands;
 using BookingSystem.Application.Desks.Common;
 using FluentValidation;
