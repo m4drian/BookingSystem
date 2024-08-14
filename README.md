@@ -25,7 +25,7 @@ dotnet build
 ```
 
 ```
-dotnet run --project .\BookingSystem.Api\ 
+dotnet run --project .\src\BookingSystem.Api\ 
 ```
 
 To run unit tests:
