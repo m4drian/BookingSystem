@@ -1,3 +1,19 @@
+# How to run project
+
+```
+dotnet build
+```
+
+```
+dotnet run --project .\BookingSystem.Api\ 
+```
+
+To run tests:
+```
+
+```
+
+
 # Endpoints
 
 ## User Management
