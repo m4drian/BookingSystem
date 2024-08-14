@@ -30,7 +30,7 @@ dotnet run --project .\src\BookingSystem.Api\
 
 To run unit tests:
 ```
-
+dotnet test
 ```
 
 Various endpoints can be tested with REST Client for Visual Studio Code, requests available in folder "Requests"
