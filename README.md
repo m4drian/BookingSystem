@@ -1,4 +1,24 @@
-# How to run project
+# Booking System API
+
+Project implementing clean architecture, partially inspired by Amichai Mantinband's guidelines for clean architecture.
+
+Main libraries used:
+xUnit, FluentValidation, MediatR, DependencyInjection, Jwt
+
+# Project Requirements
+Administration:
+- Manage locations (add/remove, can't remove if desk exists in location)
+- Manage desk in locations (add/remove if no reservation/make unavailable)
+
+Employees
+- Determine which desks are available to book or unavailable.
+- Filter desks based on location
+- Book a desk for the day.
+- Allow reserving a desk for multiple days but no more than a week.
+- Allow to change desk, but not later than the 24h before reservation.
+- Administrators can see who reserves a desk in location, where Employees can see only that specific desk is unavailable.
+
+## How to build and run project
 
 ```
 dotnet build
@@ -8,11 +28,12 @@ dotnet build
 dotnet run --project .\BookingSystem.Api\ 
 ```
 
-To run tests:
+To run unit tests:
 ```
 
 ```
 
+Various endpoints can be tested with REST Client for Visual Studio Code, requests available in folder "Requests"
 
 # Endpoints
 
@@ -86,8 +107,7 @@ PUT /api/desks/reservation/admin/{deskId}
 DELETE /api/desks/{deskId}
 ```
 
-
-# Information about models
+## Information about models
 
 location
 - Id string required
@@ -114,16 +134,3 @@ user
 one location has many desks
 one desk can be booked by one user
 user can book only one desk
-
-## Requirements
-Administration:
-- Manage locations (add/remove, can't remove if desk exists in location)
-- Manage desk in locations (add/remove if no reservation/make unavailable)
-
-Employees
-- Determine which desks are available to book or unavailable.
-- Filter desks based on location
-- Book a desk for the day.
-- Allow reserving a desk for multiple days but no more than a week.
-- Allow to change desk, but not later than the 24h before reservation.
-- Administrators can see who reserves a desk in location, where Employees can see only that specific desk is unavailable.
