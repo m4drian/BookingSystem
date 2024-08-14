@@ -1,0 +1,105 @@
+@host=http://localhost:5275
+@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjQ0YjQ0Ny1lZTNjLTQ2ZjEtODExYS1hMzk3Mjk1ZmQ5NmIiLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6IjJiYWY0OThmLThkNDQtNGZjZi1iZThiLWZlN2Q5NmRiNmY3YiIsIlJvbGUiOiJhZG1pbiIsImV4cCI6MTcyMzYxNjUzMiwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.9qyRzcWQytMM8w3HIlsrba3OzwBuJ92hf13kgtadzlY
+@tokenEmployee=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYzg3YzFhYy1jM2ZjLTQ2ZmEtYjkzNi04NmYzZTFhYjQ5MGQiLCJnaXZlbl9uYW1lIjoiSmFzb24yIiwiZmFtaWx5X25hbWUiOiJNZWRpbmEyIiwianRpIjoiOGNiMDg2NjEtZjVlZC00M2ExLWJkMzItNDA2Yzc0YTc0Y2ExIiwiUm9sZSI6ImVtcGxveWVlIiwiZXhwIjoxNzIzNjE2NTU2LCJpc3MiOiJtNGRyaWFuIiwiYXVkIjoibTRkcmlhbiJ9.l31zP-lFoIp2WvyLOK27Wf1dLpP5KNkLFPyhPKigVLE
+@deskId=743879ac-2500-4d8a-aadc-41ba038053c4
+
+POST {{host}}/api/desks/Office2
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "LocationName" : "Office2",
+    "UserEmail" : "randomGuy@email.com",
+    "Available" : false,
+    "StartDate" : "2024-08-20T08:00:00Z",
+    "EndDate": "2024-08-21T10:00:00Z"
+}
+
+###
+
+POST {{host}}/api/desks/Office2
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "LocationName" : "Office2",
+    "Available" : true
+}
+
+###
+
+GET {{host}}/api/desks/all
+Authorization: Bearer {{tokenAdmin}}}
+
+###
+
+GET {{host}}/api/desks/{{deskId}}
+Authorization: Bearer {{tokenAdmin}}}
+Content-Type: application/json
+
+{
+    "Id" : "{{deskId}}"
+}
+
+### book desk
+
+PUT {{host}}/api/desks/reservation/{{deskId}}
+Authorization: Bearer {{tokenAdmin}}}
+Content-Type: application/json
+
+{
+    "DeskId" : "{{deskId}}",
+    "UserEmail" : "jmedina@email.com",
+    "Available" : false,
+    "StartDate" : "2024-08-20T08:00:00Z",
+    "EndDate": "2024-08-21T10:00:00Z"
+}
+
+### cancel booking
+
+PUT {{host}}/api/desks/reservation/{{deskId}}
+Authorization: Bearer {{tokenEmployee}}}
+Content-Type: application/json
+
+{
+    "DeskId" : "{{deskId}}",
+    "UserEmail" : "jmedina@email.com",
+    "Available" : true
+}
+
+### only Aviable matters here, it will make desk ready for booking
+
+PUT {{host}}/api/desks/reservation/admin/{{deskId}}
+Authorization: Bearer {{tokenAdmin}}}
+Content-Type: application/json
+
+{
+    "DeskId" : "{{deskId}}",
+    "UserEmail": "jmedina2@email.com",
+    "Available" : true,
+    "StartDate" : "2024-08-22T08:00:00Z"
+}
+
+### this should do nothing
+
+PUT {{host}}/api/desks/reservation/admin/{{deskId}}
+Authorization: Bearer {{tokenAdmin}}}
+Content-Type: application/json
+
+{
+    "DeskId" : "{{deskId}}",
+    "UserEmail": null,
+    "Available" : false,
+    "StartDate" : "2024-08-21T08:00:00Z",
+    "EndDate" : "2024-08-22T08:00:00Z"
+}
+
+### delete desk
+
+DELETE {{host}}/api/desks/{{deskId}}
+Authorization: Bearer {{tokenAdmin}}}
+Content-Type: application/json
+
+{
+    "Id" : "{{deskId}}"
+}

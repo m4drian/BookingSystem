@@ -1,12 +1,12 @@
 ## Auth
 
-### Register
+### Register (Command)
 
 ```js
 POST {{host}}/auth/register
 ```
 
-### Register Request
+### Register Request (Command)
 
 ```json
 {
@@ -17,7 +17,7 @@ POST {{host}}/auth/register
 }
 ```
 
-### Register Response
+### Register Response (Command)
 
 ```js
 200 OK
@@ -33,20 +33,20 @@ POST {{host}}/auth/register
 }
 ```
 
-### Login
+### Login (Query)
 
 ```js
 POST {{host}}/auth/login
 ```
 
-### Login Request
+### Login Request (Query)
 
 ```json
     "email": "jmedina@email.com",
     "password": "UnsafePassword1234@",
 ```
 
-### Login Response
+### Login Response (Query)
 
 ```json
 {
@@ -57,3 +57,23 @@ POST {{host}}/auth/login
     "token": "eyJhb..hbbQ"
 }
 ```
+
+### add location / add location response (Command)
+
+### get locations request / get locations response (Query)
+
+### update location / update location response (Command)
+
+### delete location / delete location response (Command)
+
+### get desks from location / get desks from location respose (Query)
+
+### add desk / add desk response (Command)
+
+### delete desk / delete desk response (Command)
+
+### update desk / update desk response (Command)
+
+### check desk reservation / check desk reservation response (Query)
+
+### get desks / get desks response (Query)

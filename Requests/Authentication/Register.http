@@ -1,14 +1,38 @@
 @host=http://localhost:5275
 
-POST {{host}}/auth/register
+POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
     "firstName": "Jason",
     "lastName": "Medina",
     "email": "jmedina@email.com",
+    "role": "admin",
     "password": "UnsafePassword1234@"
 }
 
 ###
 
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Jason2",
+    "lastName": "Medina2",
+    "email": "jmedina2@email.com",
+    "role": "employee",
+    "password": "UnsafePassword1234@"
+}
+
+### invalid request
+
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "",
+    "lastName": "",
+    "email": "jmedina3emailcom",
+    "role": "kekew",
+    "password": "UnsafePassword1234@"
+}

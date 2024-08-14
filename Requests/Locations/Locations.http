@@ -1,0 +1,85 @@
+@host=http://localhost:5275
+@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjQ0YjQ0Ny1lZTNjLTQ2ZjEtODExYS1hMzk3Mjk1ZmQ5NmIiLCJnaXZlbl9uYW1lIjoiSmFzb24iLCJmYW1pbHlfbmFtZSI6Ik1lZGluYSIsImp0aSI6IjJiYWY0OThmLThkNDQtNGZjZi1iZThiLWZlN2Q5NmRiNmY3YiIsIlJvbGUiOiJhZG1pbiIsImV4cCI6MTcyMzYxNjUzMiwiaXNzIjoibTRkcmlhbiIsImF1ZCI6Im00ZHJpYW4ifQ.9qyRzcWQytMM8w3HIlsrba3OzwBuJ92hf13kgtadzlY
+@tokenEmployee=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYzg3YzFhYy1jM2ZjLTQ2ZmEtYjkzNi04NmYzZTFhYjQ5MGQiLCJnaXZlbl9uYW1lIjoiSmFzb24yIiwiZmFtaWx5X25hbWUiOiJNZWRpbmEyIiwianRpIjoiOGNiMDg2NjEtZjVlZC00M2ExLWJkMzItNDA2Yzc0YTc0Y2ExIiwiUm9sZSI6ImVtcGxveWVlIiwiZXhwIjoxNzIzNjE2NTU2LCJpc3MiOiJtNGRyaWFuIiwiYXVkIjoibTRkcmlhbiJ9.l31zP-lFoIp2WvyLOK27Wf1dLpP5KNkLFPyhPKigVLE
+
+POST {{host}}/api/locations
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "name": "Office1",
+    "description": "Office with multiple heaters"
+}
+
+###
+
+POST {{host}}/api/locations
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "name": "Office2",
+    "description": ""
+}
+
+### Bad Request
+
+POST {{host}}/api/locations
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "name": "",
+    "description": ""
+}
+
+### get all locations
+
+GET {{host}}/api/locations/all
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+
+}
+
+### get desks from location admin
+
+GET {{host}}/api/locations/desks/Office12
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "Name" : "Office12"
+}
+
+### get desks from location employee
+
+GET {{host}}/api/locations/desks/Office2
+Authorization: Bearer {{tokenEmployee}}
+Content-Type: application/json
+
+{
+    "Name" : "Office2"
+}
+
+###
+
+PUT {{host}}/api/locations/Office2
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "ChangedName": "Office12",
+    "description": "Office with multiple AC units"
+}
+
+###
+
+DELETE {{host}}/api/locations/Office2
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "Name": "Office2"
+}
