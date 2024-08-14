@@ -1,7 +1,6 @@
 using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 using MediatR;
-using BookingSystem.Application.Desks.Commands;
 using BookingSystem.Application.Desks.Common;
 using System.ComponentModel.DataAnnotations;
 

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 using BookingSystem.Application.Common.Errors;
 using BookingSystem.Application.Desks.Commands;
 using BookingSystem.Application.Desks.Common;
@@ -9,7 +8,6 @@ using BookingSystem.Contracts.Common.DTO;
 using BookingSystem.Contracts.Desks;
 using BookingSystem.Contracts.Desks.Responses;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingSystem.Api.Controllers;
@@ -32,8 +30,8 @@ public class DesksController : ControllerBase
         string locationName)
     {
         try{
-            /*if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }*/
+            if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }
 
             var command = new CreateDeskCommand(
                 locationName,
@@ -72,8 +70,8 @@ public class DesksController : ControllerBase
     public async Task<IActionResult> GetDesks()
     {
         try{
-            /*if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(); }*/
+            if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(); }
 
             var command = new GetDesksQuery(
             );
@@ -156,8 +154,8 @@ public class DesksController : ControllerBase
         string deskId)
     {
         try{
-            /*if (!User.HasClaim("Role", "employee"))
-            { return Unauthorized(request); }*/
+            if (!User.HasClaim("Role", "employee"))
+            { return Unauthorized(request); }
 
             var command = new UpdateDeskEmployeeCommand(
                 deskId ?? request.DeskId,
@@ -197,9 +195,9 @@ public class DesksController : ControllerBase
         UpdateDeskAdminRequest request, 
         string deskId)
     {
-        //try{
-            /*if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }*/
+        try{
+            if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }
 
             var command = new UpdateDeskAdminCommand(
                 deskId ?? request.DeskId,
@@ -216,7 +214,7 @@ public class DesksController : ControllerBase
             );
 
             return Ok(response);
-        /*}
+        }
         catch (ValidationException vex)
         {
             return BadRequest(new { message = vex.Message });
@@ -231,7 +229,7 @@ public class DesksController : ControllerBase
             {
                 return StatusCode(500, "An error occurred");
             }
-        }*/
+        }
     }
 
     [HttpDelete("{deskId}")]
@@ -240,8 +238,8 @@ public class DesksController : ControllerBase
         string deskId)
     {
         try{
-            /*if (!User.HasClaim("Role", "admin"))
-            { return Unauthorized(request); }*/
+            if (!User.HasClaim("Role", "admin"))
+            { return Unauthorized(request); }
 
             var command = new DeleteDeskCommand(
                 deskId ?? request.Id

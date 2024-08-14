@@ -1,4 +1,3 @@
-using System.Net;
 using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
 using BookingSystem.Domain.Entities;
 

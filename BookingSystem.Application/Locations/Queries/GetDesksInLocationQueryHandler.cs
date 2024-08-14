@@ -1,7 +1,5 @@
 using BookingSystem.Application.Common.Errors;
-using BookingSystem.Application.Authentication.Common.Interfaces.Authentication;
 using BookingSystem.Application.Authentication.Common.Interfaces.Persistance;
-using BookingSystem.Application.Authentication.Common;
 using BookingSystem.Domain.Entities;
 using MediatR;
 using BookingSystem.Application.Locations.Queries;
