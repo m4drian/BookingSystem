@@ -25,6 +25,8 @@ Employees
 - Allow reserving a desk for multiple days but no more than a week.
 - Allow to change desk, but not later than the 24h before reservation.
 - Administrators can see who reserves a desk in location, where Employees can see only that specific desk is unavailable.
+- Introduce docker support
+- Add CI with Github Actions
 
 ## How to build and run project
 
