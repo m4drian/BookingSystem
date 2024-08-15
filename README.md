@@ -141,6 +141,6 @@ user
 - Password string required
 - Role string {admin / employee} required
 
-one location has many desks
-one desk can be booked by one user
+one location has many desks \
+one desk can be booked by one user \
 user can book only one desk
