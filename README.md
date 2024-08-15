@@ -5,6 +5,16 @@ Project implementing clean architecture, partially inspired by Amichai Mantinban
 Main libraries used:
 xUnit, FluentValidation, MediatR, DependencyInjection, Jwt
 
+Planned changes and improvements:
+- Error handling with ErrorOr
+- Change Infrastructure layer to implement persistance with SQL database
+- Potentially change business logic implementation to use "BookingRequest" as a way to manage desk booking requests
+- Move more validation to FluentValidation
+- Higher test coverage
+- Introduce Aggregates, Value Objects and business rules related to state of Entities to Domain Layer
+- Introduce docker support
+- Add CI with Github Actions
+
 # Project Requirements
 Administration:
 - Manage locations (add/remove, can't remove if desk exists in location)
@@ -42,70 +52,70 @@ Various endpoints can be tested with REST Client for Visual Studio Code, request
 ## User Management
 
 - Registration:
-```json
+```
 POST /api/auth/register
 ```
 
 - Login:
-```json
+```
 POST /api/auth/login
 ```
 
 ## Location Management
 
 - Create Location (admin only):
-```json
+```
 POST /api/locations
 ```
 
 - Get All Locations:
-```json
+```
 GET /api/locations/all
 ```
 
 - Get Desks in Location (admins can see who reserved them, employees can only see if they are aviable):
-```json
+```
 GET /api/locations/desks/{locationName}
 ```
 
 - Update Location (admin only):
-```json
+```
 PUT /api/locations/{locationName}
 ```
 
 - Delete Location (admin only):
-```json
+```
 DELETE /api/locations/{locationName}
 ```
 
 ## Desk Management
 
 - Create Desk (admin only):
-```json
+```
 POST /api/desks/{locationName}
 ```
 
 - Check all desks (admin only):
-```json
+```
 GET /api/desks/all
 ```
 
 - Check if desk is reserved:
-```json
+```
 GET /api/desks/{deskId}
 ```
 
 - Update Desk Reservation
 (admins can remove reservation and change desk details except the dates, employees can reserve desk or cancel their own reservation):
-```json
+```
 PUT /api/desks/reservation/{deskId}
 ```
-```json
+```
 PUT /api/desks/reservation/admin/{deskId}
 ```
 
 - Delete Desk (admin only):
-```json
+```
 DELETE /api/desks/{deskId}
 ```
 
@@ -133,6 +143,6 @@ user
 - Password string required
 - Role string {admin / employee} required
 
-one location has many desks
-one desk can be booked by one user
+one location has many desks \
+one desk can be booked by one user \
 user can book only one desk
