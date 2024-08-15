@@ -5,6 +5,14 @@ Project implementing clean architecture, partially inspired by Amichai Mantinban
 Main libraries used:
 xUnit, FluentValidation, MediatR, DependencyInjection, Jwt
 
+Planned changes and improvements:
+- Error handling with ErrorOr
+- Change Infrastructure layer to implement persistance with SQL database
+- Potentially change business logic implementation to use "BookingRequest" as a way to manage desk booking requests
+- Move more validation to FluentValidation
+- Higher test coverage
+- Introduce Aggregates, Value Objects and business rules related to state of Entities to Domain Layer
+
 # Project Requirements
 Administration:
 - Manage locations (add/remove, can't remove if desk exists in location)
