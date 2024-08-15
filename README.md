@@ -12,6 +12,8 @@ Planned changes and improvements:
 - Move more validation to FluentValidation
 - Higher test coverage
 - Introduce Aggregates, Value Objects and business rules related to state of Entities to Domain Layer
+- Introduce docker support
+- Add CI with Github Actions
 
 # Project Requirements
 Administration:
@@ -25,8 +27,6 @@ Employees
 - Allow reserving a desk for multiple days but no more than a week.
 - Allow to change desk, but not later than the 24h before reservation.
 - Administrators can see who reserves a desk in location, where Employees can see only that specific desk is unavailable.
-- Introduce docker support
-- Add CI with Github Actions
 
 ## How to build and run project
 
